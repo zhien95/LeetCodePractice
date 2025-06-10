@@ -1,8 +1,7 @@
-package com.leetcode.practice.solution.twoPointers;
+package com.leetcode.practice.solution.TwoPointers;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class MediumTwoPointersSolution {

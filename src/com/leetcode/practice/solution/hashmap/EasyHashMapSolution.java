@@ -3,13 +3,30 @@ package com.leetcode.practice.solution.hashmap;
 import java.util.*;
 
 public class EasyHashMapSolution {
+    public boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) return false;
+
+        Map<Character, Integer> map = new HashMap<>();
+
+        for (char c : s.toCharArray()) {
+            map.put(c, map.getOrDefault(c, 0) + 1);
+        }
+
+        for (char c : t.toCharArray()) {
+            if (!map.containsKey(c)) return false;
+            map.put(c, map.get(c) - 1);
+            if (map.get(c) < 0) return false;
+        }
+
+        return true;
+    }
+
     //https://leetcode.com/problems/ransom-note/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean canConstruct(String ransomNote, String magazine) {
         HashMap<Character, Integer> countMap = new HashMap<>();
 
         for (char c : magazine.toCharArray()) {
-            int count = countMap.getOrDefault(c, 0);
-            countMap.put(c, ++count);
+            countMap.put(c, countMap.getOrDefault(c, 0) + 1);
         }
 
         for (char c : ransomNote.toCharArray()) {

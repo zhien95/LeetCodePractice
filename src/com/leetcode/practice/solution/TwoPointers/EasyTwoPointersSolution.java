@@ -1,4 +1,4 @@
-package com.leetcode.practice.solution.twoPointers;
+package com.leetcode.practice.solution.TwoPointers;
 
 public class EasyTwoPointersSolution {
     //https://leetcode.com/problems/valid-palindrome/?envType=study-plan-v2&envId=top-interview-150
