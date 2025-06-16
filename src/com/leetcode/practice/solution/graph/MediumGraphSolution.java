@@ -1,7 +1,6 @@
 package com.leetcode.practice.solution.graph;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class MediumGraphSolution {
     //https://leetcode.com/problems/number-of-islands/description/?envType=study-plan-v2&envId=top-interview-150
@@ -104,5 +103,58 @@ public class MediumGraphSolution {
         }
 
         return count;
+    }
+
+    //https://leetcode.com/problems/evaluate-division/?envType=study-plan-v2&envId=top-interview-150
+    // Graph: variable -> list of neighbors and weights
+    private Map<String, Map<String, Double>> graph = new HashMap<>();
+    public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
+        // Build the graph
+        for (int i = 0; i < equations.size(); i++) {
+            String A = equations.get(i).get(0);
+            String B = equations.get(i).get(1);
+            double k = values[i];
+
+            graph.putIfAbsent(A, new HashMap<>());
+            graph.putIfAbsent(B, new HashMap<>());
+            graph.get(A).put(B, k);
+            graph.get(B).put(A, 1.0 / k);
+        }
+
+        // Answer each query using DFS
+        double[] results = new double[queries.size()];
+        for (int i = 0; i < queries.size(); i++) {
+            String X = queries.get(i).get(0);
+            String Y = queries.get(i).get(1);
+            Set<String> visited = new HashSet<>();
+
+            results[i] = dfs(X, Y, visited);
+        }
+
+        return results;
+    }
+
+    // DFS helper function
+    private double dfs(String current, String target, Set<String> visited) {
+        if (!graph.containsKey(current) || !graph.containsKey(target)) {
+            return -1.0;
+        }
+        if (current.equals(target)) {
+            return 1.0;
+        }
+
+        visited.add(current);
+
+        for (Map.Entry<String, Double> neighbor : graph.get(current).entrySet()) {
+            String next = neighbor.getKey();
+            if (visited.contains(next)) continue;
+
+            double result = dfs(next, target, visited);
+            if (result != -1.0) {
+                return neighbor.getValue() * result;
+            }
+        }
+
+        return -1.0;
     }
 }

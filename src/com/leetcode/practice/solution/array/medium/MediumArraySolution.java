@@ -141,4 +141,58 @@ public class MediumArraySolution {
 
         return result.toString();
     }
+
+    //https://leetcode.com/problems/maximum-subarray/description/?envType=study-plan-v2&envId=top-interview-150
+    public int maxSubArray(int[] nums) {
+        // Initialize the current sum and max sum as the first element
+        int currentSum = nums[0];
+        int maxSum = nums[0];
+
+        // Start iterating from the second element
+        for (int i = 1; i < nums.length; i++) {
+            // Either start a new subarray or extend the current one
+            currentSum = Math.max(nums[i], currentSum + nums[i]);
+
+            // Update the global maximum sum if needed
+            maxSum = Math.max(maxSum, currentSum);
+        }
+
+        return maxSum;
+    }
+
+    //https://leetcode.com/problems/maximum-sum-circular-subarray/description/?envType=study-plan-v2&envId=top-interview-150
+    public int maxSubarraySumCircular(int[] nums) {
+        int total = 0;
+
+        int maxSum = nums[0];  // Max subarray sum (normal case)
+        int currMax = nums[0];
+
+        int minSum = nums[0];  // Min subarray sum (for circular case)
+        int currMin = nums[0];
+
+        for (int i = 1; i < nums.length; i++) {
+            int num = nums[i];
+            total += num;
+
+            // Standard Kadane’s for max subarray sum
+            currMax = Math.max(num, currMax + num);
+            maxSum = Math.max(maxSum, currMax);
+
+            // Kadane’s for min subarray sum
+            currMin = Math.min(num, currMin + num);
+            minSum = Math.min(minSum, currMin);
+        }
+
+        total += nums[0];  // Add the first element (missed in loop)
+
+        // If all elements are negative, maxSum is the answer
+        if (maxSum < 0) {
+            return maxSum;
+        }
+
+        // Return the maximum of:
+        // - non-circular max sum
+        // - circular max sum = total sum - min subarray sum
+        return Math.max(maxSum, total - minSum);
+    }
 }

@@ -39,9 +39,9 @@ public class MediumHashMapSolution {
                 .collect(Collectors.toSet());
 
         Set<Integer> start = new HashSet<>();
-        for (int i =0; i< nums.length;i++){
+        for (int i = 0; i < nums.length; i++) {
             int num = nums[i];
-            if (!numSet.contains(num-1)){
+            if (!numSet.contains(num - 1)) {
                 start.add(num);
             }
         }
@@ -49,10 +49,10 @@ public class MediumHashMapSolution {
         List<Integer> startList = new ArrayList<>(start);
 
         int max = 0;
-        for (Integer num : startList){
+        for (Integer num : startList) {
             int curr = num;
             int count = 1;
-            while(numSet.contains(curr+1)){
+            while (numSet.contains(curr + 1)) {
                 count++;
                 curr++;
             }
@@ -60,5 +60,55 @@ public class MediumHashMapSolution {
         }
 
         return max;
+    }
+
+    //https://leetcode.com/problems/subarray-sum-equals-k/
+    public int subarraySum(int[] nums, int k) {
+        Map<Integer, Integer> prefixSumCount = new HashMap<>();
+        prefixSumCount.put(nums[1], 1);
+        int count = 0, sum = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+
+            if (prefixSumCount.containsKey(nums[i])) {
+                count += prefixSumCount.get(nums[i]);
+            }
+
+            prefixSumCount.put(sum, prefixSumCount.getOrDefault(sum, 0) + 1);
+        }
+
+        return count;
+    }
+
+    //https://leetcode.com/problems/top-k-frequent-elements/
+    public int[] topKFrequent(int[] nums, int k) {
+        Map<Integer, Integer> freqMap = new HashMap<>();
+        for (int num : nums) {
+            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
+        }
+
+        // Buckets: index is frequency, value is list of numbers with that frequency
+        List<Integer>[] buckets = new ArrayList[nums.length + 1];
+        for (int num : freqMap.keySet()) {
+            int freq = freqMap.get(num);
+            if (buckets[freq] == null) {
+                buckets[freq] = new ArrayList<>();
+            }
+            buckets[freq].add(num);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int i = buckets.length - 1; i >= 0 && result.size() < k; i--) {
+            if (buckets[i] != null) {
+                result.addAll(buckets[i]);
+            }
+        }
+
+        return result.stream().limit(k).mapToInt(Integer::intValue).toArray();
+    }
+
+    public static void main(String[] args) {
+        MediumHashMapSolution solution = new MediumHashMapSolution();
+        System.out.println(Arrays.toString(solution.topKFrequent(new int[] {1,1,1,2,2,3}, 2)));
     }
 }

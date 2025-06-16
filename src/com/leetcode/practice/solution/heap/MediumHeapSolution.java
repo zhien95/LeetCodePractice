@@ -1,5 +1,7 @@
 package com.leetcode.practice.solution.heap;
 
+import com.leetcode.practice.solution.data.ListNode;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,5 +50,38 @@ public class MediumHeapSolution {
         }
 
         return result;
+    }
+
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) return head;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        // Move `prev` to node before the `left` position
+        int pos = 1;
+        while (pos < left) {
+            prev = prev.next;
+            pos++;
+        }
+
+        // Start reversing from `curr`
+        ListNode curr = prev.next;
+        ListNode reversePrev = null;
+
+        while (pos <= right) {
+            ListNode next = curr.next;
+            curr.next = reversePrev;
+            reversePrev = curr;
+            curr = next;
+            pos++;
+        }
+
+        // Reconnect the reversed part
+        prev.next.next = curr;   // tail of reversed segment points to the rest
+        prev.next = reversePrev; // connect prev to head of reversed part
+
+        return dummy.next;
     }
 }

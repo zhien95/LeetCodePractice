@@ -1,5 +1,10 @@
 package com.leetcode.practice.solution.SlidingWindow;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
 public class MediumSlidingWindowSolution {
     //https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&envId=top-interview-150
     public int minSubArrayLen(int target, int[] nums) {
@@ -18,4 +23,53 @@ public class MediumSlidingWindowSolution {
 
         return minLength == Integer.MAX_VALUE ? 0 : minLength;
     }
+
+    //https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+    public int lengthOfLongestSubstring(String s) {
+        int start =0;
+        Map<Character, Integer> lastSeen = new HashMap<>();
+        int maxLen = 0;
+
+        for (int end = 0; end < s.length();end ++){
+            char ch = s.charAt(end);
+
+            //if char seen, move start to last seen index +1
+            if (lastSeen.containsKey(ch) && lastSeen.get(ch) >= start){
+                start = lastSeen.get(ch) +1;
+            }
+
+            maxLen = Math.max(maxLen, end -start +1);
+            lastSeen.put(ch, end);
+        }
+
+        return maxLen;
+    }
+
+    //https://leetcode.com/problems/longest-repeating-character-replacement/description/
+    public int characterReplacement(String s, int k) {
+        Map<Character, Integer> freqMap = new HashMap<>();
+        int left = 0, maxCount = 0, maxLen = 0;
+
+        for (int right = 0; right < s.length(); right++) {
+            char c = s.charAt(right);
+            freqMap.put(c, freqMap.getOrDefault(c, 0) + 1);
+            maxCount = Math.max(maxCount, freqMap.get(c));
+
+            while ((right - left + 1) - maxCount > k) {
+                char leftChar = s.charAt(left);
+                freqMap.put(leftChar, freqMap.get(leftChar) - 1);
+                left++;
+            }
+
+            maxLen = Math.max(maxLen, right - left + 1);
+        }
+
+        return maxLen;
+    }
+
+    public static void main(String[] args) {
+        MediumSlidingWindowSolution solution = new MediumSlidingWindowSolution();
+        solution.characterReplacement("AABBBAA", 2);
+    }
+
 }
