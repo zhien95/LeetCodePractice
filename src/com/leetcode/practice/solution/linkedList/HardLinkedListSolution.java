@@ -2,6 +2,7 @@ package com.leetcode.practice.solution.linkedList;
 
 import com.leetcode.practice.solution.data.ListNode;
 
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class HardLinkedListSolution {
@@ -41,5 +42,92 @@ public class HardLinkedListSolution {
         // Append the remaining nodes from l1 or l2
         curr.next = (l1 != null) ? l1 : l2;
         return dummy.next;
+    }
+
+    //https://leetcode.com/problems/reverse-nodes-in-k-group/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode reverseKGroupWithLength(ListNode head, int k) {
+        if (head == null || k <= 1) return head;
+
+        // Step 1: Get the length of the list
+        int length = 0;
+        ListNode curr = head;
+        while (curr != null) {
+            length++;
+            curr = curr.next;
+        }
+
+        // Step 2: Use dummy node to handle head replacement
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prevGroupEnd = dummy;
+
+        // Step 3: Reverse every k nodes
+        curr = head;
+        while (length >= k) {
+            ListNode groupStart = curr;
+            ListNode prev = null;
+
+            // Reverse k nodes
+            for (int i = 0; i < k; i++) {
+                ListNode next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            // Connect previous group to reversed
+            prevGroupEnd.next = prev;
+            groupStart.next = curr;
+
+            // Move pointer to end of this group
+            prevGroupEnd = groupStart;
+
+            // Update length
+            length -= k;
+        }
+
+        return dummy.next;
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null || k <= 1) return head;
+        // Step 1: Use dummy node to handle head replacement
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode groupPrev = dummy;
+
+        while(true){
+            ListNode kth = findKth(groupPrev, k);
+            if (kth == null){
+                break;
+            }
+            ListNode nextGroup = kth.next;
+
+            //assign new prev as next group prev
+            ListNode prev = nextGroup;
+            ListNode curr = groupPrev.next;
+            //reverse linkedList
+            while (curr != nextGroup){
+                ListNode temp = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = temp;
+            }
+
+            ListNode temp = groupPrev.next; // new group tail
+            groupPrev.next = kth; // new group head
+            groupPrev = temp;
+        }
+
+
+        return dummy.next;
+    }
+
+    private ListNode findKth(ListNode node, int k) {
+        while(node != null && k > 0){
+            node = node.next;
+            k--;
+        }
+        return node;
     }
 }

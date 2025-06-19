@@ -1,5 +1,7 @@
 package com.leetcode.practice.solution.graph;
 
+import com.leetcode.practice.solution.linkedList.MediumLinkedListSolution;
+
 import java.util.*;
 
 public class MediumGraphSolution {
@@ -9,14 +11,14 @@ public class MediumGraphSolution {
         int m = grid.length;
         int n = grid[0].length;
         int count = 0;
-        Deque<int[]> q = new ArrayDeque<>();
+        Queue<int[]> q = new ArrayDeque<>();
 
         for (int r = 0; r < m; r++) {
             for (int c = 0; c < n; c++) {
                 if (grid[r][c] == '1') {
-                    q.addLast(new int[]{r, c});
+                    q.offer(new int[]{r, c});
                     while (!q.isEmpty()) {
-                        int[] coordinates = q.removeFirst();
+                        int[] coordinates = q.poll();
                         int row = coordinates[0];
                         int col = coordinates[1];
                         //mark grid as visited
@@ -28,7 +30,7 @@ public class MediumGraphSolution {
                                 continue;
                             }
                             if (grid[currRow][currCol] == '1') {
-                                q.push(new int[]{currRow, currCol});
+                                q.offer(new int[]{currRow, currCol});
                             }
                         }
                     }
@@ -156,5 +158,61 @@ public class MediumGraphSolution {
         }
 
         return -1.0;
+    }
+
+    class Node {
+        public int val;
+        public List<Node> neighbors;
+        public Node next;
+        public Node random;
+
+        public Node() {
+            neighbors = new ArrayList<>();
+        }
+
+        public Node(int val) {
+            this.val = val;
+            neighbors = new ArrayList<>();
+        }
+
+        public Node(int val, List<Node> neighbors) {
+            this.val = val;
+            this.neighbors = neighbors;
+        }
+    }
+
+    // Recursive helper function to clone nodes using DFS
+    private Node clone(Node root, Map<Integer, Node> map) {
+        // If the node has not been cloned yet
+        if (!map.containsKey(root.val)) {
+            // Create a new node with the same value
+            Node newNode = new Node(root.val);
+
+            // Store it in the map to avoid re-cloning
+            map.put(root.val, newNode);
+
+            // Recursively clone and add all neighbors
+            for (Node neighbor : root.neighbors) {
+                newNode.neighbors.add(clone(neighbor, map));
+            }
+        }
+
+        // Return the cloned node from the map
+        return map.get(root.val);
+    }
+
+    //https://leetcode.com/problems/clone-graph/description/?envType=study-plan-v2&envId=top-interview-150
+    // Main method to clone the graph starting from the given node
+    public Node cloneGraph(Node node) {
+        if (node == null) {
+            // If the input node is null, return null (empty graph)
+            return null;
+        }
+
+        // A map to keep track of already copied nodes using their values
+        Map<Integer, Node> map = new HashMap<>();
+
+        // Start DFS cloning from the given node
+        return clone(node, map);
     }
 }

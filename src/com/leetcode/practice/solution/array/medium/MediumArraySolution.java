@@ -1,5 +1,7 @@
 package com.leetcode.practice.solution.array.medium;
 
+import java.util.*;
+
 public class MediumArraySolution {
     //https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/submissions/1574069008/?envType=study-plan-v2&envId=top-interview-150
     public int removeDuplicates(int[] nums) {
@@ -195,4 +197,49 @@ public class MediumArraySolution {
         // - circular max sum = total sum - min subarray sum
         return Math.max(maxSum, total - minSum);
     }
+
+    //https://leetcode.com/problems/insert-delete-getrandom-o1/description/?envType=study-plan-v2&envId=top-interview-150
+    class RandomizedSet {
+        List<Integer> arr;
+        Map<Integer, Integer> indexMap;
+        Random rand;
+
+        public RandomizedSet() {
+            arr = new ArrayList<>();
+            indexMap = new HashMap<>();
+            rand = new Random();
+        }
+
+        public boolean insert(int val) {
+            if (indexMap.containsKey(val)) {
+                return false;
+            }
+
+            arr.add(val);
+            indexMap.put(val, arr.size() - 1);
+            return true;
+        }
+
+        public boolean remove(int val) {
+            if (!indexMap.containsKey(val)) {
+                return false;
+            }
+
+            int index = indexMap.get(val);
+            int lastVal = arr.get(arr.size() - 1);
+
+            arr.set(index, lastVal); // overwrite removed value
+            indexMap.put(lastVal, index); // update index of lastVal
+
+            arr.remove(arr.size() - 1);
+            indexMap.remove(val); // remove val from map
+
+            return true;
+        }
+
+        public int getRandom() {
+            return arr.get(rand.nextInt(arr.size()));
+        }
+    }
+
 }

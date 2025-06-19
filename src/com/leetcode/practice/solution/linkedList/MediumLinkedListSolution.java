@@ -2,10 +2,7 @@ package com.leetcode.practice.solution.linkedList;
 
 import com.leetcode.practice.solution.data.ListNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MediumLinkedListSolution {
     class Node {
@@ -63,7 +60,9 @@ public class MediumLinkedListSolution {
         return clone(node, map);
     }
 
+    //https://leetcode.com/problems/copy-list-with-random-pointer/?envType=study-plan-v2&envId=top-interview-150
     Map<Node, Node> map = new HashMap<>();
+
     public Node copyRandomList(Node head) {
         if (head == null) {
             return null;
@@ -80,8 +79,6 @@ public class MediumLinkedListSolution {
         newNode.random = copyRandomList(head.random);
         return newNode;
     }
-
-
 
     //https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/?envType=study-plan-v2&envId=top-interview-150
     public ListNode removeNthFromEnd(ListNode head, int n) {
@@ -108,6 +105,7 @@ public class MediumLinkedListSolution {
         return dummy.next;
     }
 
+    //https://leetcode.com/problems/top-k-frequent-elements/description/
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> freqMap = new HashMap<>();
         for (int num : nums) {
@@ -132,5 +130,191 @@ public class MediumLinkedListSolution {
         }
 
         return result.stream().limit(k).mapToInt(Integer::intValue).toArray();
+    }
+
+    //https://leetcode.com/problems/reverse-linked-list-ii/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode reverseBetween(ListNode head, int left, int right) {
+        if (head == null || left == right) return head;
+
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+
+        // Move `prev` to node before the `left` position
+        int pos = 1;
+        while (pos < left) {
+            prev = prev.next;
+            pos++;
+        }
+
+        // Start reversing from `curr`
+        ListNode curr = prev.next;
+        ListNode reversePrev = null;
+
+        while (pos <= right) {
+            ListNode next = curr.next;
+            curr.next = reversePrev;
+            reversePrev = curr;
+            curr = next;
+            pos++;
+        }
+
+        // Reconnect the reversed part
+        prev.next.next = curr;   // tail of reversed segment points to the rest
+        prev.next = reversePrev; // connect prev to head of reversed part
+
+        return dummy.next;
+    }
+
+    //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode deleteDuplicates(ListNode head) {
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode prev = dummy;
+        ListNode curr = head;
+
+        while (curr != null) {
+            if (curr.next != null && curr.val == curr.next.val) {
+                while (curr.next != null && curr.val == curr.next.val) {
+                    curr = curr.next;
+                }
+                prev.next = curr.next;
+            } else {
+                prev = curr;
+            }
+            curr = curr.next;
+        }
+
+        return dummy.next;
+    }
+
+    //https://leetcode.com/problems/rotate-list/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode rotateRight(ListNode head, int k) {
+        if (head == null || head.next == null || k == 0) {
+            return head;
+        }
+
+        // Step 1: Find the length
+        int length = 1;
+        ListNode tail = head;
+        while (tail.next != null) {
+            tail = tail.next;
+            length++;
+        }
+
+        // Step 2: Connect tail to head to make it circular
+        tail.next = head;
+
+        // Step 3: Find new tail: (length - k % length - 1) steps from head
+        int stepsToNewTail = length - k % length;
+        ListNode newTail = head;
+        for (int i = 1; i < stepsToNewTail; i++) {
+            newTail = newTail.next;
+        }
+
+        // Step 4: Break the ring and return new head
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+
+        return newHead;
+    }
+
+    //https://leetcode.com/problems/partition-list/description/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode partition(ListNode head, int x) {
+        ListNode leftDummy = new ListNode(0);
+        ListNode rightDummy = new ListNode(0);
+
+        ListNode left = leftDummy;
+        ListNode right = rightDummy;
+        ListNode current = head;
+        while (current != null) {
+            if (current.val < x) {
+                left.next = current;
+                left = left.next;
+            } else {
+                right.next = current;
+                right = right.next;
+            }
+            current = current.next;
+        }
+        //cut off right to prevent cycle
+        right.next = null;
+        left.next = rightDummy.next;
+
+        return leftDummy.next;
+    }
+
+    //https://leetcode.com/problems/lru-cache/?envType=study-plan-v2&envId=top-interview-150
+
+
+    class LRUCache {
+        class Node {
+            int key;
+            int val;
+            Node prev;
+            Node next;
+
+            public Node(int key, int val) {
+                this.key = key;
+                this.val = val;
+            }
+        }
+
+        int capacity;
+        Map<Integer, Node> map;
+        Node head;
+        Node tail;
+
+        public LRUCache(int capacity) {
+            this.capacity = capacity;
+            map = new HashMap<>(capacity);
+            head = new Node(0, 0);
+            tail = new Node(0, 0);
+            head.next = tail;
+            tail.prev = head;
+        }
+
+        public int get(int key) {
+            if (!map.containsKey(key)) return -1;
+            Node node = map.get(key);
+            //remove node and place on front of doublyLinkedList;
+            removeNode(node);
+            insertToHead(node);
+            return node.val;
+        }
+
+        public void put(int key, int value) {
+            //if key already exist, overwrite value and place value to front
+            if (map.containsKey(key)) {
+                Node node = map.get(key);
+                node.val = value;
+                removeNode(node);
+                insertToHead(node);
+            }
+            //else if capacity is full, evict LRU node
+            else {
+                if (map.size() == capacity) {
+                    Node lastNode = tail.prev;
+                    map.remove(lastNode.key);
+                    removeNode(tail.prev);
+                }
+                Node newNode = new Node(key, value);
+                map.put(key, newNode);
+                insertToHead(newNode);
+            }
+
+        }
+
+        private void removeNode(Node node) {
+            node.prev.next = node.next;
+            node.next.prev = node.prev;
+        }
+
+        private void insertToHead(Node node) {
+            node.prev = head;
+            node.next = head.next;
+            head.next.prev = node;
+            head.next = node;
+        }
     }
 }
