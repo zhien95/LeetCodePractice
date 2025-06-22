@@ -1,44 +1,57 @@
 package com.leetcode.practice.solution.BinaryTree;
 
+import com.leetcode.practice.solution.data.Node;
 import com.leetcode.practice.solution.data.TreeNode;
 
 import java.util.ArrayDeque;
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
-import com.leetcode.practice.solution.data.Node;
 
 public class MediumBinaryTreeSolution {
-    public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return build(preorder, 0, preorder.length, inorder, 0, inorder.length);
-    }
+    //summarise methods to build tree (preorder/postorder + inorder)
+    //1. find root in preorder/postorder
+    //2. find index of root in inorder
+    //3. split inorder array into left and right partitions
+    //4. build children nodes
+    //  4a. if preorder -> build left node first
+    //  4b. if postorder -> build right node first
 
-    private TreeNode build(int[] preorder, int preStart, int preEnd,
-                           int[] inorder, int inStart, int inEnd) {
-        if (preStart >= preEnd || inStart >= inEnd) {
-            return null;
+    public class PreOrderSolution {
+        private int preIndex = 0;
+        private Map<Integer, Integer> inorderIndexMap;
+
+        public TreeNode buildTree(int[] preorder, int[] inorder) {
+            // Map each value in inorder to its index
+            inorderIndexMap = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++) {
+                inorderIndexMap.put(inorder[i], i);
+            }
+
+            return helper(preorder, 0, inorder.length - 1);
         }
 
-        int rootVal = preorder[preStart];
-        TreeNode root = new TreeNode(rootVal);
+        private TreeNode helper(int[] preorder, int inLeft, int inRight) {
+            if (inLeft > inRight) return null;
 
-        // Find root in inorder
-        int mid = inStart;
-        while (mid < inEnd && inorder[mid] != rootVal) {
-            mid++;
+            // Take current root from preorder
+            int rootVal = preorder[preIndex++];
+            TreeNode root = new TreeNode(rootVal);
+
+            // Find the index of the root in inorder
+            int index = inorderIndexMap.get(rootVal);
+
+            // Recursively build left and right subtrees
+            root.left = helper(preorder, inLeft, index - 1);
+            root.right = helper(preorder, index + 1, inRight);
+
+            return root;
         }
-
-        int leftSize = mid - inStart;
-
-        root.left = build(preorder, preStart + 1, preStart + 1 + leftSize,
-                inorder, inStart, mid);
-        root.right = build(preorder, preStart + 1 + leftSize, preEnd,
-                inorder, mid + 1, inEnd);
-
-        return root;
     }
 
     //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
     TreeNode prevFlattened;
+
     public void flatten(TreeNode root) {
         if (root == null) {
             return;
@@ -75,6 +88,43 @@ public class MediumBinaryTreeSolution {
             }
             // Last node in this level points to null by default
         }
-        return  root;
+        return root;
+    }
+
+    public class PostOrderSolution {
+
+
+        //https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/?envType=study-plan-v2&envId=top-interview-150
+        private int postIndex;
+        private Map<Integer, Integer> inorderIndexMap;
+
+        public TreeNode buildTree(int[] inorder, int[] postorder) {
+            postIndex = postorder.length - 1;
+
+            // Build value->index map for inorder traversal
+            inorderIndexMap = new HashMap<>();
+            for (int i = 0; i < inorder.length; i++) {
+                inorderIndexMap.put(inorder[i], i);
+            }
+
+            return helper(inorder, postorder, 0, inorder.length - 1);
+        }
+
+        private TreeNode helper(int[] inorder, int[] postorder, int inLeft, int inRight) {
+            if (inLeft > inRight) return null;
+
+            // Get root value and move postIndex backward
+            int rootVal = postorder[postIndex--];
+            TreeNode root = new TreeNode(rootVal);
+
+            // Find index of root in inorder array
+            int index = inorderIndexMap.get(rootVal);
+
+            // Important: build right first
+            root.right = helper(inorder, postorder, index + 1, inRight);
+            root.left = helper(inorder, postorder, inLeft, index - 1);
+
+            return root;
+        }
     }
 }
