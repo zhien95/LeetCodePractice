@@ -110,6 +110,7 @@ public class MediumGraphSolution {
     //https://leetcode.com/problems/evaluate-division/?envType=study-plan-v2&envId=top-interview-150
     // Graph: variable -> list of neighbors and weights
     private Map<String, Map<String, Double>> graph = new HashMap<>();
+
     public double[] calcEquation(List<List<String>> equations, double[] values, List<List<String>> queries) {
         // Build the graph
         for (int i = 0; i < equations.size(); i++) {
@@ -215,4 +216,172 @@ public class MediumGraphSolution {
         // Start DFS cloning from the given node
         return clone(node, map);
     }
+
+    //https://leetcode.com/problems/game-of-life/?envType=study-plan-v2&envId=top-interview-150
+    public void gameOfLife(int[][] board) {
+        int m = board.length, n = board[0].length;
+
+        int[][] dirs = {
+                {-1, -1}, {-1, 0}, {-1, 1},
+                {0, -1}, {0, 1},
+                {1, -1}, {1, 0}, {1, 1}
+        };
+
+        // First pass: apply rules and mark transitions
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int live = 0;
+                for (int[] d : dirs) {
+                    int x = i + d[0], y = j + d[1];
+                    if (x >= 0 && x < m && y >= 0 && y < n && Math.abs(board[x][y]) == 1) {
+                        live++;
+                    }
+                }
+
+                if (board[i][j] == 1 && (live < 2 || live > 3)) board[i][j] = -1;
+                if (board[i][j] == 0 && live == 3) board[i][j] = 2;
+            }
+        }
+
+        // Second pass: finalize board state
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                board[i][j] = board[i][j] > 0 ? 1 : 0;
+            }
+        }
+    }
+
+    //https://leetcode.com/problems/surrounded-regions/?envType=study-plan-v2&envId=top-interview-150
+    public void solve(char[][] board) {
+        int m = board.length, n = board[0].length;
+        Queue<int[]> queue = new ArrayDeque<>();
+        //step 1 mark all border 'O' cell as 'T' which represent they are safe
+        for (int i = 0; i < m; i++) {
+            //left most column
+            if (board[i][0] == 'O') {
+                queue.offer(new int[]{i, 0});
+            }
+            if (board[i][n - 1] == 'O') {
+                //right most column
+                queue.offer(new int[]{i, n - 1});
+            }
+        }
+        //start from index 1, avoid duplicated corners
+        for (int j = 1; j < n - 1; j++) {
+            //top most row
+            if (board[0][j] == 'O') {
+                queue.offer(new int[]{0, j});
+
+            }
+            //bottom most row
+            if (board[m - 1][j] == 'O') {
+                queue.offer(new int[]{m - 1, j});
+            }
+        }
+        //step 2: identify the region which is the border cell extent
+        int[] dir = new int[]{0, 1, 0, -1, 0};
+        while (!queue.isEmpty()) {
+            int[] pos = queue.poll();
+            int x = pos[0], y = pos[1];
+            board[x][y] = 'T';
+            for (int i = 0; i < 4; i++) {
+                int row = x + dir[i];
+                int col = y + dir[i + 1];
+                if (row >= 0 && row < m && col >= 0 && col < n && board[row][col] == 'O') {
+                    queue.offer(new int[]{row, col});
+                }
+            }
+        }
+        //step 3: convert remaining '0' cell to 'X' and 'T' cell to '0'
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (board[i][j] == 'O') {
+                    board[i][j] = 'X';
+                } else if (board[i][j] == 'T') {
+                    board[i][j] = 'O';
+                }
+            }
+        }
+    }
+
+    //https://leetcode.com/problems/snakes-and-ladders/description/?envType=study-plan-v2&envId=top-interview-150
+    public int snakesAndLadders(int[][] board) {
+        //BFS approach
+        //initialise step as 1
+        int n = board.length;
+        Queue<Integer> queue = new ArrayDeque<>();
+        Set<Integer> visited = new HashSet<>();
+        int step = 0;
+
+        queue.offer(1);
+
+        //visit each position, push next steps into queue
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                int curr = queue.poll();
+                //reach the end
+                if (curr == n * n) {
+                    return step;
+                }
+                for (int move = 1; move <= 6 && curr + move <= n * n; move++) {
+                    int next = curr + move;
+                    int row = (next - 1) / n;
+                    int col = (next - 1) % n;
+                    //invert column for odd row
+                    col = (row % 2 == 1) ? n - 1 - col : col;
+                    row = n - 1 - row; // Adjust to top-down indexing
+                    //if snake or ladder -> set next to the destination
+                    if (board[row][col] != -1) {
+                        next = board[row][col];
+                    }
+
+                    if (!visited.contains(next)) {
+                        visited.add(next);
+                        queue.offer(next);
+                    }
+                }
+            }
+            step++;
+        }
+        return -1;
+    }
+
+    //https://leetcode.com/problems/minimum-genetic-mutation/?envType=study-plan-v2&envId=top-interview-150
+    public int minMutation(String start, String end, String[] bank) {
+        Set<String> geneBank = new HashSet<>(Arrays.asList(bank));
+        if (!geneBank.contains(end)) return -1;
+
+        char[] genes = {'A', 'C', 'G', 'T'};
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(start);
+        int steps = 0;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            while (size-- > 0) {
+                String curr = queue.poll();
+                if (curr.equals(end)) return steps;
+
+                char[] currArr = curr.toCharArray();
+                for (int i = 0; i < currArr.length; i++) {
+                    char old = currArr[i];
+                    for (char g : genes) {
+                        if (g == old) continue;
+                        currArr[i] = g;
+                        String mutated = new String(currArr);
+                        if (geneBank.contains(mutated)) {
+                            queue.offer(mutated);
+                            geneBank.remove(mutated); // mark as visited
+                        }
+                    }
+                    currArr[i] = old; // restore for next loop
+                }
+            }
+            steps++;
+        }
+
+        return -1;
+    }
+
 }
