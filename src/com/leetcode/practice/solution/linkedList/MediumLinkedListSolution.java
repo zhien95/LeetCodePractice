@@ -317,4 +317,39 @@ public class MediumLinkedListSolution {
             head.next = node;
         }
     }
+    //https://leetcode.com/problems/split-linked-list-in-parts/description/
+    public ListNode[] splitListToParts(ListNode head, int k) {
+        int length = 0;
+        ListNode current = head;
+        //find length of linkedlist
+        while (current != null) {
+            current =  current.next;
+            length++;
+        }
+
+        int baseSize = length / k;
+        int longPart = length % k;
+        ListNode[] res = new ListNode[k];
+
+        current = head;
+        for (int i = 0; i < k; i++) {
+            int partSize = baseSize + (i < longPart ? 1 : 0);
+            res[i] = current;
+            //iterate until end of part
+            for (int j = 0; j < partSize -1 ;j++){
+                if (current.next != null) {
+                    current = current.next;
+                }
+            }
+            //break linked list
+            if (current != null) {
+                ListNode temp = current.next;
+                current.next = null;
+                current = temp;
+            }
+
+        }
+
+        return res;
+    }
 }

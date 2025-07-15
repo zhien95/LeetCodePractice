@@ -99,7 +99,7 @@ public class EasyHashMapSolution {
     public boolean isHappy(int n) {
         Set<Integer> seen = new HashSet<>();
         int sum;
-        while (n != 1 && !seen.contains(n) && n <= Integer.MAX_VALUE) {
+        while (n != 1 && !seen.contains(n)) {
             seen.add(n);
             sum = 0;
             String numStr = String.valueOf(n);
