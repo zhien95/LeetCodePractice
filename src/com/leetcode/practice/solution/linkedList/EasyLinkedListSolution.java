@@ -2,11 +2,6 @@ package com.leetcode.practice.solution.linkedList;
 
 import com.leetcode.practice.solution.data.ListNode;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class EasyLinkedListSolution {
     public boolean hasCycle(ListNode head) {
         ListNode fast = head;
@@ -24,7 +19,4 @@ public class EasyLinkedListSolution {
         }
         return false;
     }
-
-
-
 }

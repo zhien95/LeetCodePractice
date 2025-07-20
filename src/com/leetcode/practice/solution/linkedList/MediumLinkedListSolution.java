@@ -317,13 +317,14 @@ public class MediumLinkedListSolution {
             head.next = node;
         }
     }
+
     //https://leetcode.com/problems/split-linked-list-in-parts/description/
     public ListNode[] splitListToParts(ListNode head, int k) {
         int length = 0;
         ListNode current = head;
         //find length of linkedlist
         while (current != null) {
-            current =  current.next;
+            current = current.next;
             length++;
         }
 
@@ -336,7 +337,7 @@ public class MediumLinkedListSolution {
             int partSize = baseSize + (i < longPart ? 1 : 0);
             res[i] = current;
             //iterate until end of part
-            for (int j = 0; j < partSize -1 ;j++){
+            for (int j = 0; j < partSize - 1; j++) {
                 if (current.next != null) {
                     current = current.next;
                 }
@@ -352,4 +353,44 @@ public class MediumLinkedListSolution {
 
         return res;
     }
+
+    //https://leetcode.com/problems/sort-list/description/?envType=study-plan-v2&envId=top-interview-150
+    public ListNode sortList(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        //split the linked list into two parts by slow and fast pointer
+        ListNode slow = head, fast = head;
+        ListNode pre = null;
+        while(fast != null && fast.next != null) {
+            pre = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //detached linked list at mid-point
+        pre.next = null;
+        //merge the two parts in a separate func
+        ListNode left = sortList(head);
+        ListNode right = sortList(slow);
+        return mergeTwoLists(left, right);
+    }
+
+    private ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode dummy = new ListNode(0);
+        ListNode current = dummy;
+
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                current.next = l1;
+                l1 = l1.next;
+            } else {
+                current.next = l2;
+                l2 = l2.next;
+            }
+            current = current.next;
+        }
+        current.next = l1 == null ? l2 : l1;
+        return dummy.next;
+    }
+
 }
