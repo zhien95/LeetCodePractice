@@ -1,5 +1,6 @@
 package com.leetcode.practice.solution.stack;
 
+import java.util.ArrayDeque;
 import java.util.Stack;
 
 public class MediumStackSolution {
@@ -76,5 +77,32 @@ public class MediumStackSolution {
         }
 
         return (!sb.isEmpty()) ? sb.toString() : "/";
+    }
+    //https://leetcode.com/problems/evaluate-reverse-polish-notation/?envType=study-plan-v2&envId=top-interview-150
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack<>();
+        //push all non operator token into stack
+        for (String token : tokens){
+            //if token is operator -> pop last two and do operation and push result
+            if (token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/")) {
+                Integer num2 = stack.pop();
+                Integer num1 = stack.pop();
+                if (token.equals("+")) {
+                    stack.push(num1 + num2);
+                } else if (token.equals("-")) {
+                    stack.push(num1 - num2);
+
+                } else if (token.equals("*")) {
+                    stack.push(num1 * num2);
+
+                } else {
+                    stack.push(num1 / num2);
+                }
+            } else {
+                stack.push(Integer.parseInt(token));
+            }
+        }
+
+        return stack.pop();
     }
 }

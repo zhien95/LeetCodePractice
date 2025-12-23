@@ -105,4 +105,35 @@ public class MediumBstSolution {
 
         return result;
     }
+
+    class BSTIterator {
+        /**
+         * In-order traversal of BST yields sorted values.
+         * Use a stack to push all left nodes down to the smallest.
+         */
+        ArrayDeque<TreeNode> stack = new ArrayDeque<>();
+
+        public BSTIterator(TreeNode root) {
+            pushLeftNode(root);
+        }
+
+        public int next() {
+            TreeNode node = stack.pop();
+            if (node.right != null) {
+                pushLeftNode(node.right);
+            }
+            return node.val;
+        }
+
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        private void pushLeftNode(TreeNode node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+    }
 }
