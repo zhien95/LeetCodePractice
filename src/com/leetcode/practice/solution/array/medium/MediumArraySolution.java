@@ -242,4 +242,35 @@ public class MediumArraySolution {
         }
     }
 
+    public static List<Integer> getRemovableIndex(String str1, String str2) {
+        if (str1.length() != str2.length() + 1) return Arrays.asList(-1);
+
+        int i = 0, j = 0;
+        int skippedIdx = 0;
+
+        // Allow skipping one mismatched character
+        while (i < str1.length() && j < str2.length()) {
+            if (str1.charAt(i) == str2.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                // Skip one char in str1 (at index i)
+                if (str1.substring(i + 1).equals(str2.substring(j))){
+                    skippedIdx = i;
+                    break;
+                } else {
+                    return Arrays.asList(-1);
+                }
+            }
+        }
+
+        List<Integer> result = new ArrayList<>();
+        result.add(skippedIdx);
+        while (skippedIdx + 1 < str1.length() && str1.charAt(skippedIdx) == str1.charAt(skippedIdx + 1)) {
+            result.add(skippedIdx + 1);
+        }
+
+        return result;
+    }
+
 }

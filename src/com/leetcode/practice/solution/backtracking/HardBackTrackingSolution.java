@@ -1,9 +1,5 @@
 package com.leetcode.practice.solution.backtracking;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class HardBackTrackingSolution {
     public int totalNQueens(int n) {
         return countBacktrack(0, n, new boolean[n], new boolean[2 * n], new boolean[2 * n]);
