@@ -2,7 +2,10 @@ package com.leetcode.practice.solution.linkedList;
 
 import com.leetcode.practice.solution.data.ListNode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MediumLinkedListSolution {
     class Node {
@@ -105,32 +108,6 @@ public class MediumLinkedListSolution {
         return dummy.next;
     }
 
-    //https://leetcode.com/problems/top-k-frequent-elements/description/
-    public int[] topKFrequent(int[] nums, int k) {
-        Map<Integer, Integer> freqMap = new HashMap<>();
-        for (int num : nums) {
-            freqMap.put(num, freqMap.getOrDefault(num, 0) + 1);
-        }
-
-        // Buckets: index is frequency, value is list of numbers with that frequency
-        List<Integer>[] buckets = new ArrayList[nums.length + 1];
-        for (int num : freqMap.keySet()) {
-            int freq = freqMap.get(num);
-            if (buckets[freq] == null) {
-                buckets[freq] = new ArrayList<>();
-            }
-            buckets[freq].add(num);
-        }
-
-        List<Integer> result = new ArrayList<>();
-        for (int i = buckets.length - 1; i >= 0 && result.size() < k; i--) {
-            if (buckets[i] != null) {
-                result.addAll(buckets[i]);
-            }
-        }
-
-        return result.stream().limit(k).mapToInt(Integer::intValue).toArray();
-    }
 
     //https://leetcode.com/problems/reverse-linked-list-ii/?envType=study-plan-v2&envId=top-interview-150
     public ListNode reverseBetween(ListNode head, int left, int right) {

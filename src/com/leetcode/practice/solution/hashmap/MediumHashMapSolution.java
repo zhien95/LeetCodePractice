@@ -100,11 +100,17 @@ public class MediumHashMapSolution {
         List<Integer> result = new ArrayList<>();
         for (int i = buckets.length - 1; i >= 0 && result.size() < k; i--) {
             if (buckets[i] != null) {
-                result.addAll(buckets[i]);
+                for (int num : buckets[i]) {
+                    if (result.size() < k) {
+                        result.add(num);
+                    } else {
+                        break;
+                    }
+                }
             }
         }
 
-        return result.stream().limit(k).mapToInt(Integer::intValue).toArray();
+        return result.stream().mapToInt(Integer::intValue).toArray();
     }
 
     public static void main(String[] args) {
