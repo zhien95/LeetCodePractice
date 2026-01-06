@@ -24,6 +24,27 @@ public class MediumArraySolution {
         return index;
     }
 
+    public int[] removeDuplicates2(int[] nums) {
+        int n = nums.length;
+        int index = 0;
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] == nums[i -1]){
+                count++;
+            } else {
+                count = 1;
+            }
+
+            if (count <= 2) {
+                nums[index++] = nums[i];
+            }
+
+            return nums;
+        }
+
+        return nums;
+    }
+
     //https://leetcode.com/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150
     public void rotate(int[] nums, int k) {
         int n = nums.length;

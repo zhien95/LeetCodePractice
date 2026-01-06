@@ -5,7 +5,7 @@ import com.leetcode.practice.solution.data.TreeNode;
 import java.util.*;
 
 //https://leetcode.com/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
-public class wMediumBstSolution {
+public class MediumBstSolution {
     public List<List<Integer>> levelOrder(TreeNode root) {
         if (root == null) {
             return Collections.emptyList();
@@ -81,7 +81,7 @@ public class wMediumBstSolution {
         while (!queue.isEmpty()) {
             //process at each level
             int size = queue.size();
-            List<Integer> levelValues = new ArrayList<>();
+            LinkedList<Integer> levelValues = new LinkedList<>();
             for (int i = 0; i < size; i++) {
                 TreeNode node = queue.poll();
 

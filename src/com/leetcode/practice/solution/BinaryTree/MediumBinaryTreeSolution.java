@@ -148,4 +148,42 @@ public class MediumBinaryTreeSolution {
         return left == null ? right : left;
     }
 
+    public static void preorderDfs(TreeNode node) {
+        if (node == null){
+            return;
+        }
+
+        System.out.println(node.val);
+        preorderDfs(node.left);
+        preorderDfs(node.right);
+
+    }
+
+    public static TreeNode createTree() {
+        // 构建一个更复杂的树结构
+        TreeNode root = new TreeNode(1);
+
+        // 第二层
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+
+        // 第三层
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right.left = new TreeNode(6);
+        root.right.right = new TreeNode(7);
+
+        return root;
+    }
+
+
+
+    public static void main (String[] args) {
+        TreeNode root = createTree();
+
+        BinaryTreePrinter.print(root);
+        BinaryTreePrinter.printByLevel(root);
+        MediumBinaryTreeSolution.preorderDfs(root);
+    }
+
 }

@@ -110,23 +110,26 @@ public class EasyArraySolution {
     public int strStr(String haystack, String needle) {
         int needleLength = needle.length();
         int haystackLength = haystack.length();
-        if (needleLength > haystackLength){
+        if (needleLength > haystackLength) {
             return -1;
         }
 
-        int i =0;
+        int i = 0;
 
-        while (i  <= haystackLength - needleLength){
+        while (i <= haystackLength - needleLength) {
             int j = 0;
-            while (j < needleLength && haystack.charAt(i+j) == needle.charAt(j)) {
+            while (j < needleLength && haystack.charAt(i + j) == needle.charAt(j)) {
                 j++;
             }
-            if (j == needleLength){
+            if (j == needleLength) {
                 return i;
             }
             i++;
         }
 
+        /**
+        @developer asdaa
+         */
 
         return -1;
 
