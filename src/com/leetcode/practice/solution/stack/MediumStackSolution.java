@@ -4,7 +4,10 @@ import java.util.ArrayDeque;
 import java.util.Stack;
 
 public class MediumStackSolution {
-    //https://leetcode.com/problems/basic-calculator-ii/
+    /**
+     * [Basic Calculator II]
+     */
+//https://leetcode.com/problems/basic-calculator-ii/
     public int calculate(String s) {
         // stack to store intermediate results
         Stack<Integer> stack = new Stack<>();
@@ -52,7 +55,10 @@ public class MediumStackSolution {
         return result;
     }
 
-    //https://leetcode.com/problems/simplify-path/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Simplify Path]
+     */
+//https://leetcode.com/problems/simplify-path/description/?envType=study-plan-v2&envId=top-interview-150
     public String simplifyPath(String path) {
         String[] parts = path.split("/");
         Stack<String> stack = new Stack<>();
@@ -78,7 +84,11 @@ public class MediumStackSolution {
 
         return (!sb.isEmpty()) ? sb.toString() : "/";
     }
-    //https://leetcode.com/problems/evaluate-reverse-polish-notation/?envType=study-plan-v2&envId=top-interview-150
+
+    /**
+     * [Evaluate Reverse Polish Notation]
+     */
+//https://leetcode.com/problems/evaluate-reverse-polish-notation/?envType=study-plan-v2&envId=top-interview-150
     public int evalRPN(String[] tokens) {
         Stack<Integer> stack = new Stack<>();
         //push all non operator token into stack

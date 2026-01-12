@@ -5,7 +5,16 @@ import com.leetcode.practice.solution.linkedList.MediumLinkedListSolution;
 import java.util.*;
 
 public class MediumGraphSolution {
-    //https://leetcode.com/problems/number-of-islands/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Number of Islands]
+     * <p>
+     * Counts the number of islands in a 2D binary grid where '1's represent land and '0's represent water.
+     * An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically.
+     *
+     * @param grid A 2D binary grid representing land ('1') and water ('0')
+     * @return The number of islands in the grid
+     */
+//https://leetcode.com/problems/number-of-islands/description/?envType=study-plan-v2&envId=top-interview-150
     public int numIslands(char[][] grid) {
         int[] dir = {0, 1, 0, -1, 0};
         int m = grid.length;
@@ -107,7 +116,18 @@ public class MediumGraphSolution {
         return count;
     }
 
-    //https://leetcode.com/problems/evaluate-division/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Evaluate Division]
+     * <p>
+     * Given a list of equations and their corresponding values, evaluate division queries.
+     * Builds a graph where each variable is a node and edges represent ratios between variables.
+     *
+     * @param equations List of variable pairs representing equations (Ai / Bi)
+     * @param values Corresponding values for each equation
+     * @param queries List of queries to evaluate (Xi / Yi)
+     * @return Array of results for each query
+     */
+//https://leetcode.com/problems/evaluate-division/?envType=study-plan-v2&envId=top-interview-150
     // Graph: variable -> list of neighbors and weights
     private Map<String, Map<String, Double>> graph = new HashMap<>();
 
@@ -202,7 +222,16 @@ public class MediumGraphSolution {
         return map.get(root.val);
     }
 
-    //https://leetcode.com/problems/clone-graph/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Clone Graph]
+     * <p>
+     * Clones a connected undirected graph. Each node contains a value and a list of its neighbors.
+     * Uses DFS to traverse and create a deep copy of the graph.
+     *
+     * @param node Reference to the starting node of the graph to be cloned
+     * @return Reference to the cloned graph's starting node
+     */
+//https://leetcode.com/problems/clone-graph/description/?envType=study-plan-v2&envId=top-interview-150
     // Main method to clone the graph starting from the given node
     public Node cloneGraph(Node node) {
         if (node == null) {
@@ -217,7 +246,10 @@ public class MediumGraphSolution {
         return clone(node, map);
     }
 
-    //https://leetcode.com/problems/game-of-life/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Game of Life]
+ */
+//https://leetcode.com/problems/game-of-life/?envType=study-plan-v2&envId=top-interview-150
     public void gameOfLife(int[][] board) {
         int m = board.length, n = board[0].length;
 
@@ -251,7 +283,10 @@ public class MediumGraphSolution {
         }
     }
 
-    //https://leetcode.com/problems/surrounded-regions/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Surrounded Regions]
+ */
+//https://leetcode.com/problems/surrounded-regions/?envType=study-plan-v2&envId=top-interview-150
     public void solve(char[][] board) {
         int m = board.length, n = board[0].length;
         Queue<int[]> queue = new ArrayDeque<>();
@@ -304,7 +339,10 @@ public class MediumGraphSolution {
         }
     }
 
-    //https://leetcode.com/problems/snakes-and-ladders/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Snakes and Ladders]
+     */
+//https://leetcode.com/problems/snakes-and-ladders/description/?envType=study-plan-v2&envId=top-interview-150
     public int snakesAndLadders(int[][] board) {
         //BFS approach
         //initialise step as 1
@@ -347,7 +385,10 @@ public class MediumGraphSolution {
         return -1;
     }
 
-    //https://leetcode.com/problems/minimum-genetic-mutation/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Minimum Genetic Mutation]
+ */
+//https://leetcode.com/problems/minimum-genetic-mutation/?envType=study-plan-v2&envId=top-interview-150
     public int minMutation(String start, String end, String[] bank) {
         Set<String> geneBank = new HashSet<>(Arrays.asList(bank));
         if (!geneBank.contains(end)) return -1;

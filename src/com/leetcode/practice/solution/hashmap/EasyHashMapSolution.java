@@ -21,7 +21,10 @@ public class EasyHashMapSolution {
         return true;
     }
 
-    //https://leetcode.com/problems/ransom-note/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Ransom Note]
+     */
+//https://leetcode.com/problems/ransom-note/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean canConstruct(String ransomNote, String magazine) {
         HashMap<Character, Integer> countMap = new HashMap<>();
 
@@ -38,7 +41,10 @@ public class EasyHashMapSolution {
         return true;
     }
 
-    //https://leetcode.com/problems/isomorphic-strings/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Isomorphic Strings]
+     */
+//https://leetcode.com/problems/isomorphic-strings/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean isIsomorphic(String s, String t) {
         if (s.length() != t.length()) return false;
 
@@ -65,7 +71,10 @@ public class EasyHashMapSolution {
         return true;
     }
 
-    //https://leetcode.com/problems/word-pattern/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Word Pattern]
+     */
+//https://leetcode.com/problems/word-pattern/?envType=study-plan-v2&envId=top-interview-150
     public boolean wordPattern(String pattern, String s) {
         Map<Character, String> charToWord = new HashMap<>();
         Map<String, Character> wordToChar = new HashMap<>();
@@ -95,7 +104,10 @@ public class EasyHashMapSolution {
         return true;
     }
 
-    //https://leetcode.com/problems/happy-number/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Happy Number]
+     */
+//https://leetcode.com/problems/happy-number/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean isHappy(int n) {
         Set<Integer> seen = new HashSet<>();
         int sum;
@@ -113,7 +125,10 @@ public class EasyHashMapSolution {
         return n == 1;
     }
 
-    //https://leetcode.com/problems/contains-duplicate-ii/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Contains Duplicate II]
+     */
+//https://leetcode.com/problems/contains-duplicate-ii/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean containsNearbyDuplicate(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();  // num -> last index
 

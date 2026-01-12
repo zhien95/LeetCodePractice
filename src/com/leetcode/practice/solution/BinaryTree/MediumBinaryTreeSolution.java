@@ -49,7 +49,16 @@ public class MediumBinaryTreeSolution {
         }
     }
 
-    //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Flatten Binary Tree to Linked List]
+     * <p>
+     * Flattens a binary tree to a linked list in-place such that the linked list follows the pre-order traversal
+     * of the binary tree. Each node's left pointer becomes null and right pointer points to the next node
+     * in the pre-order traversal.
+     *
+     * @param root Root of the binary tree to flatten
+     */
+//https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
     TreeNode prevFlattened;
 
     public void flatten(TreeNode root) {
@@ -94,10 +103,22 @@ public class MediumBinaryTreeSolution {
     public class PostOrderSolution {
 
 
-        //https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/?envType=study-plan-v2&envId=top-interview-150
+        /**
+         * [Construct Binary Tree from Inorder and Postorder Traversal]
+         */
+//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/?envType=study-plan-v2&envId=top-interview-150
         private int postIndex;
         private Map<Integer, Integer> inorderIndexMap;
 
+        /**
+         * Constructs a binary tree from inorder and postorder traversal arrays.
+         * Uses the fact that the last element in postorder is the root, and inorder
+         * helps determine left and right subtrees.
+         *
+         * @param inorder Inorder traversal of the binary tree
+         * @param postorder Postorder traversal of the binary tree
+         * @return Root of the constructed binary tree
+         */
         public TreeNode buildTree(int[] inorder, int[] postorder) {
             postIndex = postorder.length - 1;
 
@@ -129,7 +150,19 @@ public class MediumBinaryTreeSolution {
     }
 
 
-    //https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Lowest Common Ancestor of a Binary Tree]
+     * <p>
+     * Finds the lowest common ancestor (LCA) of two given nodes in a binary tree.
+     * The LCA is the lowest node that has both p and q as descendants.
+     * Uses recursive approach to search in left and right subtrees.
+     *
+     * @param root Root of the binary tree
+     * @param p    First target node
+     * @param q    Second target node
+     * @return The lowest common ancestor of nodes p and q
+     */
+//https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=top-interview-150
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         //base case: root = null | found p | found q
         if (root == null || root == p || root == q){

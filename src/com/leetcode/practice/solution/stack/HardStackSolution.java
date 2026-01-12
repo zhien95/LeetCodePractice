@@ -3,7 +3,10 @@ package com.leetcode.practice.solution.stack;
 import java.util.Stack;
 
 public class HardStackSolution {
-    //https://leetcode.com/problems/basic-calculator/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Basic Calculator]
+     */
+//https://leetcode.com/problems/basic-calculator/?envType=study-plan-v2&envId=top-interview-150
     public int calculate(String s) {
         int result = 0;
         int sign = 1; // 1 for '+', -1 for '-'

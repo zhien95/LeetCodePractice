@@ -3,6 +3,9 @@ package com.leetcode.practice.solution.interval;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * [Summary Ranges]
+ */
 //https://leetcode.com/problems/summary-ranges/?envType=study-plan-v2&envId=top-interview-150
 public class EasyIntervalSolution {
     public List<String> summaryRanges(int[] nums) {

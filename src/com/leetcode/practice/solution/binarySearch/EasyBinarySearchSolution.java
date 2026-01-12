@@ -1,7 +1,10 @@
 package com.leetcode.practice.solution.binarySearch;
 
 public class EasyBinarySearchSolution {
-    //https://leetcode.com/problems/search-insert-position/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Search Insert Position]
+     */
+//https://leetcode.com/problems/search-insert-position/?envType=study-plan-v2&envId=top-interview-150
     public int searchInsert(int[] nums, int target) {
         int left = 0;
         int right = nums.length - 1;

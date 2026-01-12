@@ -1,7 +1,20 @@
 package com.leetcode.practice.solution.dp;
 
+/**
+ * [House Robber]
+ */
 //https://leetcode.com/problems/house-robber/
 public class MediumDpSolution {
+    /**
+     * [House Robber]
+     * <p>
+     * Solves the House Robber problem where a robber plans to rob houses along a street.
+     * Each house has a certain amount of money, but adjacent houses cannot be robbed.
+     * Returns the maximum amount that can be robbed without alerting the police.
+     *
+     * @param nums Array representing the amount of money in each house
+     * @return The maximum amount that can be robbed
+     */
     public int rob(int[] nums) {
         //At each house i, there are 2 choices
         //1: to rob, skip dp[i-1] so total = dp[i-2] + nums[i]

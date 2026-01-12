@@ -1,7 +1,10 @@
 package com.leetcode.practice.solution.binarySearch;
 
 public class HardBinarySearchSolution {
-    //https://leetcode.com/problems/median-of-two-sorted-arrays/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Median of Two Sorted Arrays]
+     */
+//https://leetcode.com/problems/median-of-two-sorted-arrays/?envType=study-plan-v2&envId=top-interview-150
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int m = nums1.length;
         int n = nums2.length;

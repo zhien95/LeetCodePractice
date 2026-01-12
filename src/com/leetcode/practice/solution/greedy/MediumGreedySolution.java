@@ -28,7 +28,10 @@ public class MediumGreedySolution {
     }
 
 
-    //https://leetcode.com/problems/sell-diminishing-valued-colored-balls/description/
+    /**
+     * [Sell Diminishing-Valued Colored Balls]
+     */
+//https://leetcode.com/problems/sell-diminishing-valued-colored-balls/description/
     public int maxProfit(int[] inventory, int orders) {
         final int MOD = 1_000_000_007;
         Arrays.sort(inventory);

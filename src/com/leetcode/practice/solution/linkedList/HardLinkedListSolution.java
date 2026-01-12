@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class HardLinkedListSolution {
-    //https://leetcode.com/problems/merge-k-sorted-lists/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Merge k Sorted Lists]
+     */
+//https://leetcode.com/problems/merge-k-sorted-lists/?envType=study-plan-v2&envId=top-interview-150
     public ListNode mergeKLists(ListNode[] lists) {
         if (lists == null || lists.length == 0) return null;
         return mergeRange(lists, 0, lists.length - 1);
@@ -44,7 +47,10 @@ public class HardLinkedListSolution {
         return dummy.next;
     }
 
-    //https://leetcode.com/problems/reverse-nodes-in-k-group/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Reverse Nodes in k-Group]
+     */
+//https://leetcode.com/problems/reverse-nodes-in-k-group/?envType=study-plan-v2&envId=top-interview-150
     public ListNode reverseKGroupWithLength(ListNode head, int k) {
         if (head == null || k <= 1) return head;
 

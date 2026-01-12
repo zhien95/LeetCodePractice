@@ -3,7 +3,17 @@ package com.leetcode.practice.solution.backtracking;
 import java.util.*;
 
 public class MediumBackTrackingSolution {
-    //https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Letter Combinations of a Phone Number]
+     * <p>
+     * Given a string containing digits from 2-9 inclusive, returns all possible letter combinations
+     * that the number could represent based on traditional telephone button mappings.
+     * Uses backtracking to generate all combinations.
+     *
+     * @param digits String containing digits from 2-9
+     * @return List of all possible letter combinations
+     */
+//https://leetcode.com/problems/letter-combinations-of-a-phone-number/description/?envType=study-plan-v2&envId=top-interview-150
     public List<String> letterCombinations(String digits) {
         if (digits.isEmpty()) {
             return new ArrayList<>();
@@ -38,7 +48,17 @@ public class MediumBackTrackingSolution {
     }
 
 
-    //https://leetcode.com/problems/combinations/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Combinations]
+     * <p>
+     * Returns all possible combinations of k numbers chosen from the range [1, n].
+     * Uses backtracking to generate all valid combinations.
+     *
+     * @param n The upper bound of the range [1, n]
+     * @param k The number of elements in each combination
+     * @return List of all possible combinations
+     */
+//https://leetcode.com/problems/combinations/description/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res = new ArrayList<>();
         combineBackTrack(n, res, new ArrayList<>(), k, 1);
@@ -60,7 +80,16 @@ public class MediumBackTrackingSolution {
         }
     }
 
-    //https://leetcode.com/problems/permutations/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Permutations]
+     * <p>
+     * Returns all possible permutations of an array of distinct integers.
+     * Uses backtracking to generate all permutations by tracking used elements.
+     *
+     * @param nums Array of distinct integers
+     * @return List of all possible permutations
+     */
+//https://leetcode.com/problems/permutations/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         permuteBackTrack(nums, result, new ArrayList<>(), new boolean[nums.length]);
@@ -87,7 +116,7 @@ public class MediumBackTrackingSolution {
     }
 
 
-    //Permutations II (contains duplicates) : https://leetcode.com/problems/permutations-ii/
+    //https://leetcode.com/problems/permutations-ii/
     public List<List<Integer>> permuteUnique(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -111,7 +140,7 @@ public class MediumBackTrackingSolution {
 
     }
 
-    //Subsets : https://leetcode.com/problems/subsets/
+    //https://leetcode.com/problems/subsets/
     public List<List<Integer>> subsets(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -128,7 +157,7 @@ public class MediumBackTrackingSolution {
         }
     }
 
-    //Subsets II (contains duplicates) : https://leetcode.com/problems/subsets-ii/
+    //https://leetcode.com/problems/subsets-ii/
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(nums);
@@ -168,7 +197,7 @@ public class MediumBackTrackingSolution {
         return result;
     }
 
-    //Combination Sum: https://leetcode.com/problems/combination-sum/
+    //https://leetcode.com/problems/combination-sum/
     public List<List<Integer>> combinationSum(int[] nums, int target) {
         List<List<Integer>> list = new ArrayList<>();
         if (nums == null || nums.length == 0 || target < 0) {
@@ -217,7 +246,10 @@ public class MediumBackTrackingSolution {
         }
     }
 
-    //https://leetcode.com/problems/palindrome-partitioning/
+    /**
+ * [Palindrome Partitioning]
+ */
+//https://leetcode.com/problems/palindrome-partitioning/
     public List<List<String>> partition(String s) {
         List<List<String>> list = new ArrayList<>();
         if (s == null) {

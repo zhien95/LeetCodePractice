@@ -52,7 +52,10 @@ public class MediumMatrixSolution {
         return true;
     }
 
-    //https://leetcode.com/problems/spiral-matrix/submissions/1624463272/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Spiral Matrix]
+     */
+//https://leetcode.com/problems/spiral-matrix/submissions/1624463272/?envType=study-plan-v2&envId=top-interview-150
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> res = new ArrayList<>();
         int rowStart = 0;
@@ -93,7 +96,10 @@ public class MediumMatrixSolution {
         return res;
     }
 
-    //https://leetcode.com/problems/rotate-image/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Rotate Image]
+     */
+//https://leetcode.com/problems/rotate-image/?envType=study-plan-v2&envId=top-interview-150
     public void rotate(int[][] matrix) {
         int n = matrix.length;
 
@@ -118,7 +124,10 @@ public class MediumMatrixSolution {
         }
     }
 
-    // https://leetcode.com/problems/set-matrix-zeroes/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Set Matrix Zeroes]
+     */
+// https://leetcode.com/problems/set-matrix-zeroes/?envType=study-plan-v2&envId=top-interview-150
     public void setZeroes(int[][] matrix) {
         int m = matrix.length;
         int n = matrix[0].length;

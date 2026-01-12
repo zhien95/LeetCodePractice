@@ -6,7 +6,10 @@ import java.util.List;
 import java.util.Map;
 
 public class HardIntervalSolution {
-    //https://leetcode.com/problems/substring-with-concatenation-of-all-words/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Substring with Concatenation of All Words]
+     */
+//https://leetcode.com/problems/substring-with-concatenation-of-all-words/description/?envType=study-plan-v2&envId=top-interview-150
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> result = new ArrayList<>();
         if (s == null || words == null || words.length == 0) return result;

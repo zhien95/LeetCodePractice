@@ -5,7 +5,18 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MediumTwoPointersSolution {
-    //https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Two Sum II - Input Array Is Sorted]
+     * <p>
+     * Given a 1-indexed array of integers numbers that is already sorted in non-decreasing order,
+     * find two numbers such that they add up to a specific target number.
+     * Uses two pointers technique to achieve O(n) time complexity and O(1) space complexity.
+     *
+     * @param numbers Sorted array of integers
+     * @param target  Target sum to find
+     * @return Array containing 1-based indices of the two numbers that add up to the target
+     */
+//https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/?envType=study-plan-v2&envId=top-interview-150
     public int[] twoSum(int[] numbers, int target) {
         int left = 0, right = numbers.length - 1;
 
@@ -23,7 +34,17 @@ public class MediumTwoPointersSolution {
         return new int[0]; // or throw an exception
     }
 
-    //https://leetcode.com/problems/container-with-most-water/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Container With Most Water]
+     * <p>
+     * Given an integer array height of length n, find two lines that together with the x-axis
+     * form a container that holds the most water.
+     * Uses two pointers technique starting from both ends and moving inward.
+     *
+     * @param height Array representing heights of vertical lines
+     * @return Maximum area of water that can be contained
+     */
+//https://leetcode.com/problems/container-with-most-water/?envType=study-plan-v2&envId=top-interview-150
     public int maxArea(int[] height) {
         int n = height.length;
         int left  =0;
@@ -46,7 +67,16 @@ public class MediumTwoPointersSolution {
         return maxArea;
     }
 
-    //https://leetcode.com/problems/3sum/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [3Sum]
+     * <p>
+     * Find all unique triplets in the array which gives the sum of zero.
+     * Uses sorting combined with two pointers technique to avoid duplicates and achieve O(n^2) time complexity.
+     *
+     * @param nums Array of integers
+     * @return List of all unique triplets that sum to zero
+     */
+//https://leetcode.com/problems/3sum/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> threeSum(int[] nums) {
         Arrays.sort(nums);
         List<List<Integer>> res = new ArrayList<>();

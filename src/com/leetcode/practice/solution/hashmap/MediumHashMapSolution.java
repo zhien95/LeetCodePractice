@@ -4,7 +4,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class MediumHashMapSolution {
-    //https://leetcode.com/problems/group-anagrams/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Group Anagrams]
+     */
+//https://leetcode.com/problems/group-anagrams/description/?envType=study-plan-v2&envId=top-interview-150
     public List<List<String>> groupAnagrams(String[] strs) {
         Map<String, List<String>> map = new HashMap<>();
 
@@ -29,7 +32,10 @@ public class MediumHashMapSolution {
         return new ArrayList<>(map.values());
     }
 
-    //https://leetcode.com/problems/longest-consecutive-sequence/submissions/1630704575/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Longest Consecutive Sequence]
+     */
+//https://leetcode.com/problems/longest-consecutive-sequence/submissions/1630704575/?envType=study-plan-v2&envId=top-interview-150
     public int longestConsecutive(int[] nums) {
         if (nums.length == 0) {
             return 0;
@@ -62,7 +68,10 @@ public class MediumHashMapSolution {
         return max;
     }
 
-    //https://leetcode.com/problems/subarray-sum-equals-k/
+    /**
+     * [Subarray Sum Equals K]
+     */
+//https://leetcode.com/problems/subarray-sum-equals-k/
     public int subarraySum(int[] nums, int k) {
         Map<Integer, Integer> prefixSumCount = new HashMap<>();
         prefixSumCount.put(nums[1], 1);
@@ -80,7 +89,10 @@ public class MediumHashMapSolution {
         return count;
     }
 
-    //https://leetcode.com/problems/top-k-frequent-elements/
+    /**
+     * [Top K Frequent Elements]
+     */
+//https://leetcode.com/problems/top-k-frequent-elements/
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> freqMap = new HashMap<>();
         for (int num : nums) {

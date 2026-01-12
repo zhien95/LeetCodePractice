@@ -6,7 +6,17 @@ import java.util.Map;
 import java.util.Set;
 
 public class MediumSlidingWindowSolution {
-    //https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Minimum Size Subarray Sum]
+     * <p>
+     * Finds the minimal length of a contiguous subarray for which the sum is greater than or equal to the target.
+     * Uses the sliding window technique to achieve O(n) time complexity.
+     *
+     * @param target The target sum to achieve
+     * @param nums   Array of positive integers
+     * @return The minimal length of a subarray with sum >= target, or 0 if no such subarray exists
+     */
+//https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&envId=top-interview-150
     public int minSubArrayLen(int target, int[] nums) {
         int n = nums.length;
         int start = 0, sum = 0;
@@ -24,7 +34,16 @@ public class MediumSlidingWindowSolution {
         return minLength == Integer.MAX_VALUE ? 0 : minLength;
     }
 
-    //https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
+    /**
+     * [Longest Substring Without Repeating Characters]
+     * <p>
+     * Finds the length of the longest substring without repeating characters.
+     * Uses the sliding window technique with a hash map to track character positions.
+     *
+     * @param s Input string
+     * @return Length of the longest substring without repeating characters
+     */
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/description/
     public int lengthOfLongestSubstring(String s) {
         int start =0;
         Map<Character, Integer> lastSeen = new HashMap<>();
@@ -45,7 +64,10 @@ public class MediumSlidingWindowSolution {
         return maxLen;
     }
 
-    //https://leetcode.com/problems/longest-repeating-character-replacement/description/
+    /**
+     * [Longest Repeating Character Replacement]
+     */
+//https://leetcode.com/problems/longest-repeating-character-replacement/description/
     public int characterReplacement(String s, int k) {
         Map<Character, Integer> freqMap = new HashMap<>();
         int left = 0, maxCount = 0, maxLen = 0;

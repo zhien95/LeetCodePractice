@@ -1,7 +1,10 @@
 package com.leetcode.practice.solution.math;
 
 public class EasyMathSolution {
-    //https://leetcode.com/problems/palindrome-number/submissions/1658630340/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Palindrome Number]
+     */
+//https://leetcode.com/problems/palindrome-number/submissions/1658630340/?envType=study-plan-v2&envId=top-interview-150
     public boolean isPalindrome(int x) {
         // Negative numbers and those ending in 0 (but not 0 itself) are not palindromes
         if (x < 0 || (x % 10 == 0 && x != 0)) return false;
@@ -40,7 +43,10 @@ public class EasyMathSolution {
         return result;
     }
 
-    //https://leetcode.com/problems/sqrtx/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Sqrt(x)]
+     */
+//https://leetcode.com/problems/sqrtx/description/?envType=study-plan-v2&envId=top-interview-150
     public int mySqrt(int x) {
         if (x < 2) return x;
 
@@ -64,7 +70,10 @@ public class EasyMathSolution {
         return ans;
     }
 
-    //https://leetcode.com/problems/powx-n/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Pow(x, n)]
+     */
+//https://leetcode.com/problems/powx-n/?envType=study-plan-v2&envId=top-interview-150
     public double myPow(double x, int n) {
         long N = n;  // Convert to long to handle Integer.MIN_VALUE safely
         double result = fastPow(x, Math.abs(N));

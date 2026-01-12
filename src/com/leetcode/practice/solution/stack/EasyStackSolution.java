@@ -19,7 +19,10 @@ public class EasyStackSolution {
         return stack.isEmpty();
     }
 
-    //https://leetcode.com/problems/next-greater-element-i/
+    /**
+     * [Next Greater Element I]
+     */
+//https://leetcode.com/problems/next-greater-element-i/
     public int[] nextGreaterElement(int[] nums1, int[] nums2) {
         HashMap<Integer, Integer> map = new HashMap<>();
         Stack<Integer> stack = new Stack<>();

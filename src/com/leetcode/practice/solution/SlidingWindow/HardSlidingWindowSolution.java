@@ -4,7 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HardSlidingWindowSolution {
-    //https://leetcode.com/problems/minimum-window-substring/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Minimum Window Substring]
+     */
+//https://leetcode.com/problems/minimum-window-substring/description/?envType=study-plan-v2&envId=top-interview-150
     public String minWindow(String s, String t) {
         if (t.length() > s.length()) return "";
 

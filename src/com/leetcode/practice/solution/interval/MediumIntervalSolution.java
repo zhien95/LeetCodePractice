@@ -4,7 +4,10 @@ import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 public class MediumIntervalSolution {
-    //https://leetcode.com/problems/longest-substring-without-repeating-characters/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Longest Substring Without Repeating Characters]
+     */
+//https://leetcode.com/problems/longest-substring-without-repeating-characters/description/?envType=study-plan-v2&envId=top-interview-150
     public int lengthOfLongestSubstring(String s) {
         int start = 0;
         int max = 0;
@@ -24,10 +27,13 @@ public class MediumIntervalSolution {
         return max;
     }
 
-    //https://leetcode.com/problems/merge-intervals/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Merge Intervals]
+     */
+//https://leetcode.com/problems/merge-intervals/description/?envType=study-plan-v2&envId=top-interview-150
     public int[][] merge(int[][] intervals) {
         //sort array by start
-        Arrays.sort(intervals, (a,b) -> Integer.compare(a[0],b[0]));
+        Arrays.sort(intervals, (a, b) -> a[0] - b[0]);
 
         List<int[]> merged = new ArrayList<>();
         int[] current = intervals[0];
@@ -48,7 +54,10 @@ public class MediumIntervalSolution {
         return merged.toArray(new int[merged.size()][2]);
     }
 
-    //https://leetcode.com/problems/insert-interval/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Insert Interval]
+     */
+//https://leetcode.com/problems/insert-interval/description/?envType=study-plan-v2&envId=top-interview-150
     public int[][] insert(int[][] intervals, int[] newInterval) {
         List<int[]> result = new ArrayList<>();
         int i = 0;
@@ -77,7 +86,10 @@ public class MediumIntervalSolution {
         return result.toArray(new int[result.size()][2]);
     }
 
-    //https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Minimum Number of Arrows to Burst Balloons]
+     */
+//https://leetcode.com/problems/minimum-number-of-arrows-to-burst-balloons/description/?envType=study-plan-v2&envId=top-interview-150
     public int findMinArrowShots(int[][] points) {
         // Sort the balloons based on their end coordinates
         Arrays.sort(points, (a, b) -> Integer.compare(a[1], b[1]));

@@ -4,7 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MediumBinarySearchSolution {
-    //https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Find First and Last Position of Element in Sorted Array]
+     * <p>
+     * Finds the starting and ending position of a given target value in a sorted array.
+     * If target is not found, returns [-1, -1]. Algorithm runs in O(log n) time complexity.
+     *
+     * @param nums   Sorted array of integers
+     * @param target The value to search for
+     * @return Array containing the first and last positions of the target value
+     */
+//https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
     public int[] searchRange(int[] nums, int target) {
         List<Integer> result = new ArrayList<>();
         int first = findFirst(nums, target);
@@ -56,6 +66,16 @@ public class MediumBinarySearchSolution {
         return -1;
     }
 
+    /**
+     * [Search in Rotated Sorted Array]
+     *
+     * Searches for a target value in a sorted array that has been possibly rotated at some pivot point.
+     * Algorithm maintains O(log n) time complexity using modified binary search.
+     *
+     * @param nums Rotated sorted array of integers
+     * @param target The value to search for
+     * @return Index of the target value if found, otherwise -1
+ */
 //https://leetcode.com/problems/search-in-rotated-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
     public int search(int[] nums, int target) {
         int left = 0;
@@ -95,7 +115,18 @@ public class MediumBinarySearchSolution {
         return -1;
     }
 
-    //https://leetcode.com/problems/search-a-2d-matrix/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Search a 2D Matrix]
+     * <p>
+     * Searches for a target value in an m x n matrix where each row is sorted in ascending order from left to right,
+     * and each column is sorted in ascending order from top to bottom.
+     * Algorithm treats the 2D matrix as a 1D sorted array and performs binary search.
+     *
+     * @param matrix The 2D matrix to search in
+     * @param target The value to search for
+     * @return true if the target is found in the matrix, otherwise false
+     */
+//https://leetcode.com/problems/search-a-2d-matrix/?envType=study-plan-v2&envId=top-interview-150
     public boolean searchMatrix(int[][] matrix, int target) {
         if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
             return false;
@@ -126,6 +157,9 @@ public class MediumBinarySearchSolution {
 
         return false;
     }
+/**
+ * [Find Peak Element]
+ */
 //https://leetcode.com/problems/find-peak-element/description/?envType=study-plan-v2&envId=top-interview-150
     public int findPeakElement(int[] nums) {
         int left = 0;
@@ -148,7 +182,10 @@ public class MediumBinarySearchSolution {
         return left;
     }
 
-    //https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Find Minimum in Rotated Sorted Array]
+     */
+//https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/description/?envType=study-plan-v2&envId=top-interview-150
     public int findMin(int[] nums) {
         int left = 0;
         int right = nums.length - 1;

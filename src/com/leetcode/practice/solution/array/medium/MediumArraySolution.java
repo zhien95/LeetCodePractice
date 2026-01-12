@@ -3,7 +3,16 @@ package com.leetcode.practice.solution.array.medium;
 import java.util.*;
 
 public class MediumArraySolution {
-    //https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/submissions/1574069008/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Remove Duplicates from Sorted Array II]
+     * <p>
+     * Removes duplicates from a sorted array in-place such that duplicates appeared at most twice.
+     * The relative order of elements is preserved and the method modifies the input array.
+     *
+     * @param nums Sorted input array
+     * @return The length of the array after removing extra duplicates
+     */
+//https://leetcode.com/problems/remove-duplicates-from-sorted-array-ii/submissions/1574069008/?envType=study-plan-v2&envId=top-interview-150
     public int removeDuplicates(int[] nums) {
         if (nums.length == 0) return 0;
 
@@ -45,7 +54,17 @@ public class MediumArraySolution {
         return nums;
     }
 
-    //https://leetcode.com/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Rotate Array]
+     * <p>
+     * Rotates the array to the right by k steps, where k is non-negative.
+     * Uses the reversal algorithm which involves reversing the whole array,
+     * then reversing the first k elements and the remaining elements separately.
+     *
+     * @param nums Array to be rotated
+     * @param k    Number of steps to rotate right
+     */
+//https://leetcode.com/problems/rotate-array/?envType=study-plan-v2&envId=top-interview-150
     public void rotate(int[] nums, int k) {
         int n = nums.length;
         if (n < 2) {
@@ -69,7 +88,16 @@ public class MediumArraySolution {
         }
     }
 
-    //https://leetcode.com/problems/product-of-array-except-self/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Product of Array Except Self]
+     * <p>
+     * Returns an array where each element at index i is the product of all elements in the input array
+     * except nums[i]. Achieves O(n) time complexity and O(1) space complexity (excluding output array).
+     *
+     * @param nums Input array of integers
+     * @return Array where each element is the product of all other elements
+     */
+//https://leetcode.com/problems/product-of-array-except-self/?envType=study-plan-v2&envId=top-interview-150
     public int[] productExceptSelf(int[] nums) {
         int n = nums.length;
         int[] output = new int[n];
@@ -90,7 +118,10 @@ public class MediumArraySolution {
         return output;
     }
 
-    //https://leetcode.com/problems/gas-station/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Gas Station]
+ */
+//https://leetcode.com/problems/gas-station/?envType=study-plan-v2&envId=top-interview-150
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int totalTank = 0;
         int currTank = 0;
@@ -111,7 +142,10 @@ public class MediumArraySolution {
         return totalTank >= 0 ? startIndex : -1;
     }
 
-    //https://leetcode.com/problems/reverse-words-in-a-string/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Reverse Words in a String]
+ */
+//https://leetcode.com/problems/reverse-words-in-a-string/?envType=study-plan-v2&envId=top-interview-150
     public String reverseWords(String s) {
         // Trim leading and trailing spaces, then split by one or more spaces
         String[] words = s.trim().split("\\s+");
@@ -130,7 +164,10 @@ public class MediumArraySolution {
         return result.toString();
     }
 
-    //https://leetcode.com/problems/zigzag-conversion/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Zigzag Conversion]
+ */
+//https://leetcode.com/problems/zigzag-conversion/?envType=study-plan-v2&envId=top-interview-150
     public String convert(String s, int numRows) {
         if (numRows == 1 || s.length() <= numRows) return s;
 
@@ -165,7 +202,10 @@ public class MediumArraySolution {
         return result.toString();
     }
 
-    //https://leetcode.com/problems/maximum-subarray/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Maximum Subarray]
+     */
+//https://leetcode.com/problems/maximum-subarray/description/?envType=study-plan-v2&envId=top-interview-150
     public int maxSubArray(int[] nums) {
         // Initialize the current sum and max sum as the first element
         int currentSum = nums[0];
@@ -183,7 +223,10 @@ public class MediumArraySolution {
         return maxSum;
     }
 
-    //https://leetcode.com/problems/maximum-sum-circular-subarray/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Maximum Sum Circular Subarray]
+     */
+//https://leetcode.com/problems/maximum-sum-circular-subarray/description/?envType=study-plan-v2&envId=top-interview-150
     public int maxSubarraySumCircular(int[] nums) {
         int total = 0;
 
@@ -219,7 +262,10 @@ public class MediumArraySolution {
         return Math.max(maxSum, total - minSum);
     }
 
-    //https://leetcode.com/problems/insert-delete-getrandom-o1/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Insert Delete GetRandom O(1)]
+     */
+//https://leetcode.com/problems/insert-delete-getrandom-o1/description/?envType=study-plan-v2&envId=top-interview-150
     class RandomizedSet {
         List<Integer> arr;
         Map<Integer, Integer> indexMap;

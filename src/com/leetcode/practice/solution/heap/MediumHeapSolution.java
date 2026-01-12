@@ -8,7 +8,10 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class MediumHeapSolution {
-    //https://leetcode.com/problems/kth-largest-element-in-an-array/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Kth Largest Element in an Array]
+     */
+//https://leetcode.com/problems/kth-largest-element-in-an-array/description/?envType=study-plan-v2&envId=top-interview-150
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> minHeap = new PriorityQueue<>();
 
@@ -22,7 +25,10 @@ public class MediumHeapSolution {
         return minHeap.peek();
     }
 
-    //https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Find K Pairs with Smallest Sums]
+     */
+//https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> kSmallestPairs(int[] nums1, int[] nums2, int k) {
         List<List<Integer>> result = new ArrayList<>();
         if (nums1.length == 0 || nums2.length == 0 || k == 0) return result;

@@ -3,6 +3,17 @@ package com.leetcode.practice.solution.array.hard;
 import java.util.Arrays;
 
 public class HardArraySolution {
+    /**
+     * [Candy]
+     * <p>
+     * Distributes candies to children such that each child has at least one candy
+     * and children with a higher rating get more candies than their neighbors.
+     * Uses two-pass approach: left-to-right and right-to-left to satisfy both neighbor conditions.
+     *
+     * @param ratings Array of children's ratings
+     * @return Minimum number of candies needed
+     */
+    //https://leetcode.com/problems/candy/description/?envType=study-plan-v2&envId=top-interview-150
     public int candy(int[] ratings) {
         int n = ratings.length;
         int[] candies = new int[n];
@@ -30,6 +41,16 @@ public class HardArraySolution {
         return sum;
     }
 
+    /**
+     * [Trapping Rain Water]
+     * <p>
+     * Computes how much water can be trapped after raining given an elevation map.
+     * Uses two-pointer technique to efficiently calculate trapped water in O(n) time.
+     *
+     * @param height Array representing elevation map
+     * @return Amount of trapped rainwater
+     */
+    //https://leetcode.com/problems/trapping-rain-water/?envType=study-plan-v2&envId=top-interview-150
     public int trap(int[] height) {
         if (height == null || height.length == 0) return 0;
 
@@ -57,7 +78,17 @@ public class HardArraySolution {
         return res;
     }
 
-    //https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Best Time to Buy and Sell Stock IV]
+     * <p>
+     * Finds the maximum profit that can be achieved with at most k transactions.
+     * Uses dynamic programming with buy and sell arrays to track optimal states.
+     *
+     * @param k      Maximum number of transactions allowed
+     * @param prices Array of stock prices on each day
+     * @return Maximum profit achievable
+     */
+//https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/description/?envType=study-plan-v2&envId=top-interview-150
     public int maxProfit(int k, int[] prices) {
         int[] buy = new int[k + 1];
         int[] sell = new int[k + 1];

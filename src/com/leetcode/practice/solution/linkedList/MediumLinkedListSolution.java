@@ -63,7 +63,10 @@ public class MediumLinkedListSolution {
         return clone(node, map);
     }
 
-    //https://leetcode.com/problems/copy-list-with-random-pointer/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Copy List with Random Pointer]
+     */
+//https://leetcode.com/problems/copy-list-with-random-pointer/?envType=study-plan-v2&envId=top-interview-150
     Map<Node, Node> map = new HashMap<>();
 
     public Node copyRandomList(Node head) {
@@ -83,7 +86,10 @@ public class MediumLinkedListSolution {
         return newNode;
     }
 
-    //https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Remove Nth Node From End of List]
+     */
+//https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/?envType=study-plan-v2&envId=top-interview-150
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -109,7 +115,10 @@ public class MediumLinkedListSolution {
     }
 
 
-    //https://leetcode.com/problems/reverse-linked-list-ii/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Reverse Linked List II]
+     */
+//https://leetcode.com/problems/reverse-linked-list-ii/?envType=study-plan-v2&envId=top-interview-150
     public ListNode reverseBetween(ListNode head, int left, int right) {
         if (head == null || left == right) return head;
 
@@ -118,32 +127,32 @@ public class MediumLinkedListSolution {
         ListNode prev = dummy;
 
         // Move `prev` to node before the `left` position
-        int pos = 1;
-        while (pos < left) {
+        for (int i =1; i < left; i++){
             prev = prev.next;
-            pos++;
         }
 
         // Start reversing from `curr`
         ListNode curr = prev.next;
-        ListNode reversePrev = null;
+        ListNode reverseHead = null;
 
-        while (pos <= right) {
+        for (int i = left; i <= right; i++){
             ListNode next = curr.next;
-            curr.next = reversePrev;
-            reversePrev = curr;
+            curr.next = reverseHead;
+            reverseHead = curr;
             curr = next;
-            pos++;
         }
 
         // Reconnect the reversed part
         prev.next.next = curr;   // tail of reversed segment points to the rest
-        prev.next = reversePrev; // connect prev to head of reversed part
+        prev.next = reverseHead; // connect prev to head of reversed part
 
         return dummy.next;
     }
 
-    //https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Remove Duplicates from Sorted List II]
+     */
+//https://leetcode.com/problems/remove-duplicates-from-sorted-list-ii/?envType=study-plan-v2&envId=top-interview-150
     public ListNode deleteDuplicates(ListNode head) {
         ListNode dummy = new ListNode(0);
         dummy.next = head;
@@ -151,10 +160,13 @@ public class MediumLinkedListSolution {
         ListNode curr = head;
 
         while (curr != null) {
-            if (curr.next != null && curr.val == curr.next.val) {
-                while (curr.next != null && curr.val == curr.next.val) {
-                    curr = curr.next;
-                }
+            boolean isDuplicate = false;
+            while (curr.next != null && curr.val == curr.next.val) {
+                curr = curr.next;
+                isDuplicate = true;
+            }
+
+            if (isDuplicate) {
                 prev.next = curr.next;
             } else {
                 prev = curr;
@@ -165,7 +177,10 @@ public class MediumLinkedListSolution {
         return dummy.next;
     }
 
-    //https://leetcode.com/problems/rotate-list/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Rotate List]
+     */
+//https://leetcode.com/problems/rotate-list/?envType=study-plan-v2&envId=top-interview-150
     public ListNode rotateRight(ListNode head, int k) {
         if (head == null || head.next == null || k == 0) {
             return head;
@@ -196,7 +211,10 @@ public class MediumLinkedListSolution {
         return newHead;
     }
 
-    //https://leetcode.com/problems/partition-list/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Partition List]
+     */
+//https://leetcode.com/problems/partition-list/description/?envType=study-plan-v2&envId=top-interview-150
     public ListNode partition(ListNode head, int x) {
         ListNode leftDummy = new ListNode(0);
         ListNode rightDummy = new ListNode(0);
@@ -295,7 +313,10 @@ public class MediumLinkedListSolution {
         }
     }
 
-    //https://leetcode.com/problems/split-linked-list-in-parts/description/
+    /**
+     * [Split Linked List in Parts]
+     */
+//https://leetcode.com/problems/split-linked-list-in-parts/description/
     public ListNode[] splitListToParts(ListNode head, int k) {
         int length = 0;
         ListNode current = head;
@@ -331,7 +352,10 @@ public class MediumLinkedListSolution {
         return res;
     }
 
-    //https://leetcode.com/problems/sort-list/description/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Sort List]
+     */
+//https://leetcode.com/problems/sort-list/description/?envType=study-plan-v2&envId=top-interview-150
     public ListNode sortList(ListNode head) {
         if (head == null || head.next == null) {
             return head;
