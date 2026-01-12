@@ -6,6 +6,13 @@ import java.util.Map;
 public class HardSlidingWindowSolution {
     /**
      * [Minimum Window Substring]
+     *
+     * Finds the minimum window in string s which contains all characters of string t (including duplicates).
+     * Uses sliding window technique with two pointers to achieve O(m+n) time complexity.
+     *
+     * @param s Input string to search in
+     * @param t Target string containing characters to include in the window
+     * @return Minimum window substring that contains all characters of t, or empty string if none exists
      */
 //https://leetcode.com/problems/minimum-window-substring/description/?envType=study-plan-v2&envId=top-interview-150
     public String minWindow(String s, String t) {

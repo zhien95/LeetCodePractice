@@ -70,6 +70,14 @@ public class MediumHashMapSolution {
 
     /**
      * [Subarray Sum Equals K]
+     *
+     * Counts the number of continuous subarrays whose sum equals k.
+     * Uses a prefix sum approach with a hash map to store the frequency of each prefix sum.
+     * For each position, checks if (current_sum - k) exists in the map to find subarrays ending at current position.
+     *
+     * @param nums Array of integers
+     * @param k Target sum
+     * @return Number of subarrays with sum equal to k
      */
 //https://leetcode.com/problems/subarray-sum-equals-k/
     public int subarraySum(int[] nums, int k) {

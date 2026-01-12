@@ -4,6 +4,14 @@ import java.util.HashMap;
 import java.util.Stack;
 
 public class EasyStackSolution {
+    /**
+     * Checks if a string containing parentheses is valid.
+     * A string is valid if all open brackets are closed by the same type of brackets,
+     * in the correct order, and every close bracket has a corresponding open bracket.
+     *
+     * @param s String containing only parentheses characters '()', '{}', '[]'
+     * @return true if the string is valid, false otherwise
+     */
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<>();
         for (char c : s.toCharArray()) {

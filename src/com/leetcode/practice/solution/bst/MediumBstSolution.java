@@ -6,6 +6,12 @@ import java.util.*;
 
 /**
  * [Binary Tree Level Order Traversal]
+ *
+ * Performs level order traversal of a binary tree, returning nodes' values level by level from left to right.
+ * Uses BFS (breadth-first search) with a queue to process nodes level by level.
+ *
+ * @param root Root of the binary tree
+ * @return List of lists containing values at each level
  */
 //https://leetcode.com/problems/binary-tree-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
 public class MediumBstSolution {
@@ -41,6 +47,13 @@ public class MediumBstSolution {
 
     /**
      * [Binary Tree Right Side View]
+     *
+     * Returns the right side view of a binary tree, which contains the values of the nodes
+     * you can see when standing on the right side of the tree, ordered from top to bottom.
+     * Uses BFS to process each level and captures the rightmost node.
+     *
+     * @param root Root of the binary tree
+     * @return List of values visible from the right side
      */
 //https://leetcode.com/problems/binary-tree-right-side-view/description/?envType=study-plan-v2&envId=top-interview-150
     public List<Integer> rightSideView(TreeNode root) {
@@ -76,6 +89,13 @@ public class MediumBstSolution {
 
     /**
      * [Binary Tree Zigzag Level Order Traversal]
+     *
+     * Performs zigzag level order traversal of a binary tree, returning nodes' values
+     * from left to right on one level and right to left on the next, alternating between levels.
+     * Uses BFS with a deque to efficiently add elements at the beginning or end based on direction.
+     *
+     * @param root Root of the binary tree
+     * @return List of lists containing values at each level in zigzag order
      */
 //https://leetcode.com/problems/binary-tree-zigzag-level-order-traversal/?envType=study-plan-v2&envId=top-interview-150
     public List<List<Integer>> zigzagLevelOrder(TreeNode root) {

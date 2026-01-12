@@ -3,6 +3,12 @@ package com.leetcode.practice.solution.math;
 public class EasyMathSolution {
     /**
      * [Palindrome Number]
+     *
+     * Determines whether an integer is a palindrome without converting it to a string.
+     * A number is a palindrome if it reads the same backward as forward.
+     *
+     * @param x Integer to check
+     * @return true if x is a palindrome, false otherwise
      */
 //https://leetcode.com/problems/palindrome-number/submissions/1658630340/?envType=study-plan-v2&envId=top-interview-150
     public boolean isPalindrome(int x) {
@@ -45,6 +51,13 @@ public class EasyMathSolution {
 
     /**
      * [Sqrt(x)]
+     *
+     * Computes and returns the square root of a given non-negative integer x,
+     * rounded down to the nearest integer. Does not use any built-in exponent function or operator.
+     * Uses binary search to find the integer square root efficiently.
+     *
+     * @param x Non-negative integer
+     * @return Integer square root of x, rounded down
      */
 //https://leetcode.com/problems/sqrtx/description/?envType=study-plan-v2&envId=top-interview-150
     public int mySqrt(int x) {
@@ -72,6 +85,13 @@ public class EasyMathSolution {
 
     /**
      * [Pow(x, n)]
+     *
+     * Calculates x raised to the power n (x^n) efficiently using fast exponentiation.
+     * Handles negative exponents by taking the reciprocal of the positive power.
+     *
+     * @param x Base value
+     * @param n Exponent value
+     * @return x raised to the power of n
      */
 //https://leetcode.com/problems/powx-n/?envType=study-plan-v2&envId=top-interview-150
     public double myPow(double x, int n) {

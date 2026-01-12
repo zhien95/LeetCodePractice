@@ -1,5 +1,16 @@
 package com.leetcode.practice.solution.backtracking;
 
+/**
+ * [N-Queens II]
+ * <p>
+ * Counts the number of distinct solutions to the n-queens puzzle.
+ * The n-queens puzzle is the problem of placing n queens on an n x n chessboard
+ * such that no two queens attack each other.
+ *
+ * @param n Size of the chessboard and number of queens
+ * @return Number of distinct solutions
+ */
+//https://leetcode.com/problems/n-queens-ii/
 public class HardBackTrackingSolution {
     public int totalNQueens(int n) {
         return countBacktrack(0, n, new boolean[n], new boolean[2 * n], new boolean[2 * n]);

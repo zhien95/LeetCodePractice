@@ -7,6 +7,12 @@ import java.util.*;
 public class EasyBstSolution {
     /**
      * [Average of Levels in Binary Tree]
+     *
+     * Calculates the average value of nodes on each level of a binary tree.
+     * Uses level-order traversal (BFS) to process nodes level by level.
+     *
+     * @param root Root of the binary tree
+     * @return List of average values for each level
      */
 //https://leetcode.com/problems/average-of-levels-in-binary-tree/?envType=study-plan-v2&envId=top-interview-150
     public List<Double> averageOfLevels(TreeNode root) {
@@ -40,6 +46,13 @@ public class EasyBstSolution {
 
     /**
      * [Convert Sorted Array to Binary Search Tree]
+     *
+     * Converts a sorted array into a height-balanced binary search tree.
+     * A height-balanced BST is defined as a binary tree in which the depth of the two subtrees
+     * of every node never differs by more than one.
+     *
+     * @param nums Sorted array of integers
+     * @return Root of the height-balanced BST
      */
 //https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/?envType=study-plan-v2&envId=top-interview-150
     public TreeNode sortedArrayToBST(int[] nums) {
@@ -64,6 +77,12 @@ public class EasyBstSolution {
 
     /**
      * [Minimum Absolute Difference in BST]
+     *
+     * Finds the minimum absolute difference between values of any two different nodes in a BST.
+     * Uses in-order traversal to visit nodes in ascending order, allowing comparison of consecutive values.
+     *
+     * @param root Root of the binary search tree
+     * @return Minimum absolute difference between any two different node values
      */
 //https://leetcode.com/problems/minimum-absolute-difference-in-bst/description/?envType=study-plan-v2&envId=top-interview-150
     public int getMinimumDifference(TreeNode root) {
@@ -95,6 +114,13 @@ public class EasyBstSolution {
 
     /**
      * [Kth Smallest Element in a BST]
+     *
+     * Finds the kth smallest element in a binary search tree.
+     * Uses in-order traversal to visit nodes in ascending order until the kth element is found.
+     *
+     * @param root Root of the binary search tree
+     * @param k Position of the desired smallest element (1-indexed)
+     * @return Value of the kth smallest node
      */
 //https://leetcode.com/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&envId=top-interview-150
     public int kthSmallest(TreeNode root, int k) {
@@ -121,6 +147,15 @@ public class EasyBstSolution {
 
     /**
      * [Validate Binary Search Tree]
+     *
+     * Determines if a binary tree is a valid binary search tree.
+     * A valid BST satisfies the following conditions:
+     * - Left subtree contains only nodes with keys less than the node's key
+     * - Right subtree contains only nodes with keys greater than the node's key
+     * - Both left and right subtrees are also BSTs
+     *
+     * @param root Root of the binary tree
+     * @return true if the tree is a valid BST, false otherwise
      */
 //https://leetcode.com/problems/validate-binary-search-tree/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean isValidBST(TreeNode root) {

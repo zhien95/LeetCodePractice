@@ -1,11 +1,20 @@
 package com.leetcode.practice.solution.matrix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
 public class MediumMatrixSolution {
+    /**
+     * Validates if a 9x9 Sudoku board is valid according to the following rules:
+     * 1. Each row must contain the digits 1-9 without repetition.
+     * 2. Each column must contain the digits 1-9 without repetition.
+     * 3. Each of the nine 3x3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+     * Empty cells are represented by '.' and do not count as duplicates.
+     *
+     * @param board 9x9 Sudoku board with digits or '.' for empty cells
+     * @return true if the board is valid according to the rules, false otherwise
+     */
     public boolean isValidSudoku(char[][] board) {
         // Create arrays of HashSet to track rows, columns, and 3x3 boxes
         HashSet<Character>[] rows = new HashSet[9];

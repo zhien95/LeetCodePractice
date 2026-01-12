@@ -4,12 +4,16 @@ import java.util.Arrays;
 
 public class MediumGreedySolution {
     /**
-     * 计算购买所有花朵的最小成本
-     * 每个人轮流买花，每次购买价格会根据之前购买的次数递增
+     * [Greedy Florist]
      *
-     * @param k 购买者的人数
-     * @param c 每朵花的初始价格数组
-     * @return 购买所有花朵的最小总成本
+     * Calculates the minimum cost to purchase all flowers when the price of each flower
+     * increases based on how many flowers the same person has already bought.
+     * Implements a greedy approach by sorting flowers in descending order and assigning
+     * purchases to minimize cost.
+     *
+     * @param k Number of people buying flowers
+     * @param c Array of initial prices for each flower
+     * @return Minimum total cost to purchase all flowers
      */
     //https://www.hackerrank.com/challenges/greedy-florist/problem?isFullScreen=true
     public static long getMinimumCost(int k, int[] c) {

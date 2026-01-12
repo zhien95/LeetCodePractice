@@ -3,6 +3,14 @@ package com.leetcode.practice.solution.binarySearch;
 public class HardBinarySearchSolution {
     /**
      * [Median of Two Sorted Arrays]
+     *
+     * Finds the median of two sorted arrays of sizes m and n respectively.
+     * The overall run time complexity should be O(log (m+n)).
+     * Uses binary search approach to partition both arrays appropriately.
+     *
+     * @param nums1 First sorted array
+     * @param nums2 Second sorted array
+     * @return Median of the two sorted arrays
      */
 //https://leetcode.com/problems/median-of-two-sorted-arrays/?envType=study-plan-v2&envId=top-interview-150
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {

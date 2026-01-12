@@ -7,6 +7,13 @@ import java.time.ZoneOffset;
 public class MediumMathSolution {
     /**
      * [Factorial Trailing Zeroes]
+     *
+     * Calculates the number of trailing zeroes in n! (n factorial).
+     * Trailing zeros are created by factors of 10, which come from multiplying 2 and 5.
+     * Since there are always more factors of 2 than 5 in a factorial, we only need to count factors of 5.
+     *
+     * @param n Input number
+     * @return Number of trailing zeroes in n!
      */
 //https://leetcode.com/problems/factorial-trailing-zeroes/?envType=study-plan-v2&envId=top-interview-150
     public int trailingZeroes(int n) {

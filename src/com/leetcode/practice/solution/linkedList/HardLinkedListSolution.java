@@ -2,12 +2,15 @@ package com.leetcode.practice.solution.linkedList;
 
 import com.leetcode.practice.solution.data.ListNode;
 
-import java.util.List;
-import java.util.PriorityQueue;
-
 public class HardLinkedListSolution {
     /**
      * [Merge k Sorted Lists]
+     *
+     * Merges k sorted linked lists into one sorted linked list.
+     * Uses divide and conquer approach to efficiently merge multiple sorted lists.
+     *
+     * @param lists Array of sorted linked lists
+     * @return Merged sorted linked list
      */
 //https://leetcode.com/problems/merge-k-sorted-lists/?envType=study-plan-v2&envId=top-interview-150
     public ListNode mergeKLists(ListNode[] lists) {
@@ -49,6 +52,13 @@ public class HardLinkedListSolution {
 
     /**
      * [Reverse Nodes in k-Group]
+     *
+     * Reverses the nodes of the linked list k at a time.
+     * If the number of nodes is not a multiple of k, the remaining nodes are left as is.
+     *
+     * @param head Head of the linked list
+     * @param k Number of nodes to reverse at a time
+     * @return Modified linked list with nodes reversed in groups of k
      */
 //https://leetcode.com/problems/reverse-nodes-in-k-group/?envType=study-plan-v2&envId=top-interview-150
     public ListNode reverseKGroupWithLength(ListNode head, int k) {

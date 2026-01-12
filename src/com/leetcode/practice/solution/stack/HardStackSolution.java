@@ -5,6 +5,13 @@ import java.util.Stack;
 public class HardStackSolution {
     /**
      * [Basic Calculator]
+     *
+     * Evaluates a mathematical expression given as a string.
+     * Supports addition, subtraction, parentheses, and handles spaces.
+     * Does not use any built-in function like eval().
+     *
+     * @param s Mathematical expression string containing digits, '+', '-', '(', ')', and ' '
+     * @return Result of evaluating the expression
      */
 //https://leetcode.com/problems/basic-calculator/?envType=study-plan-v2&envId=top-interview-150
     public int calculate(String s) {

@@ -1,8 +1,20 @@
 package com.leetcode.practice.solution.hashmap;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class EasyHashMapSolution {
+    /**
+     * Checks if two strings are anagrams of each other.
+     * An anagram is a word or phrase formed by rearranging the letters of another.
+     * Uses a hash map to count character frequencies in both strings.
+     *
+     * @param s First string
+     * @param t Second string
+     * @return true if the strings are anagrams, false otherwise
+     */
     public boolean isAnagram(String s, String t) {
         if (s.length() != t.length()) return false;
 
