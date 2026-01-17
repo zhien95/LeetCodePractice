@@ -16,7 +16,6 @@ public class MediumBinaryTreeSolution {
     //4. build children nodes
     //  4a. if preorder -> build left node first
     //  4b. if postorder -> build right node first
-
     public class PreOrderSolution {
         private int preIndex = 0;
         private Map<Integer, Integer> inorderIndexMap;
@@ -49,64 +48,8 @@ public class MediumBinaryTreeSolution {
         }
     }
 
-    /**
-     * [Flatten Binary Tree to Linked List]
-     * <p>
-     * Flattens a binary tree to a linked list in-place such that the linked list follows the pre-order traversal
-     * of the binary tree. Each node's left pointer becomes null and right pointer points to the next node
-     * in the pre-order traversal.
-     *
-     * @param root Root of the binary tree to flatten
-     */
-//https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
-    TreeNode prevFlattened;
-
-    public void flatten(TreeNode root) {
-        if (root == null) {
-            return;
-        }
-
-        flatten(root.right);
-        flatten(root.left);
-
-        root.left = null;
-        root.right = prevFlattened;
-        prevFlattened = root;
-    }
-
-    public Node connect(Node root) {
-        if (root == null) return null;
-
-        Queue<Node> queue = new ArrayDeque<>();
-        queue.offer(root);
-
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-            Node prev = null;
-
-            for (int i = 0; i < size; i++) {
-                Node node = queue.poll();
-
-                if (prev != null) {
-                    prev.next = node;
-                }
-                prev = node;
-
-                if (node.left != null) queue.offer(node.left);
-                if (node.right != null) queue.offer(node.right);
-            }
-            // Last node in this level points to null by default
-        }
-        return root;
-    }
-
+    //https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/?envType=study-plan-v2&envId=top-interview-150
     public class PostOrderSolution {
-
-
-        /**
-         * [Construct Binary Tree from Inorder and Postorder Traversal]
-         */
-//https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/?envType=study-plan-v2&envId=top-interview-150
         private int postIndex;
         private Map<Integer, Integer> inorderIndexMap;
 
@@ -149,6 +92,127 @@ public class MediumBinaryTreeSolution {
         }
     }
 
+    //https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
+    /**
+     * [Flatten Binary Tree to Linked List]
+     * <p>
+     * Flattens a binary tree to a linked list in-place such that the linked list follows the pre-order traversal
+     * of the binary tree. Each node's left pointer becomes null and right pointer points to the next node
+     * in the pre-order traversal.
+     *
+     * @param root Root of the binary tree to flatten
+     */
+//https://leetcode.com/problems/flatten-binary-tree-to-linked-list/?envType=study-plan-v2&envId=top-interview-150
+    TreeNode prevFlattened;
+
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        flatten(root.right);
+        flatten(root.left);
+
+        root.left = null;
+        root.right = prevFlattened;
+        prevFlattened = root;
+    }
+
+    //https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/?envType=study-plan-v2&envId=top-interview-150
+    public Node connect(Node root) {
+        if (root == null) return null;
+
+        Queue<Node> queue = new ArrayDeque<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Node prev = null;
+
+            for (int i = 0; i < size; i++) {
+                Node node = queue.poll();
+
+                if (prev != null) {
+                    prev.next = node;
+                }
+                prev = node;
+
+                if (node.left != null) queue.offer(node.left);
+                if (node.right != null) queue.offer(node.right);
+            }
+            // Last node in this level points to null by default
+            prev.next = null;
+        }
+        return root;
+    }
+
+    //connect without using Queue, memory complexity = O(1)
+    public Node connectWithoutQ(Node root) {
+        // Pointer to traverse the current level using next pointers
+        Node curr = root;
+
+        // Dummy node to build the next level's linked list
+        Node dummy = new Node(0);
+
+        // Tail pointer to append children to the next level
+        Node tail = dummy;
+
+        // Traverse level by level
+        while (curr != null) {
+
+            // If left child exists, append it to next level list
+            if (curr.left != null) {
+                tail.next = curr.left;
+                tail = tail.next;
+            }
+
+            // If right child exists, append it to next level list
+            if (curr.right != null) {
+                tail.next = curr.right;
+                tail = tail.next;
+            }
+
+            // Move to the next node in the current level
+            curr = curr.next;
+
+            // If end of current level is reached
+            if (curr == null) {
+                // Move to the first node of the next level
+                curr = dummy.next;
+
+                // Reset dummy and tail for building the following level
+                dummy.next = null;
+                tail = dummy;
+            }
+        }
+
+        // Root now has all next pointers connected
+        return root;
+    }
+
+    //https://leetcode.com/problems/sum-root-to-leaf-numbers/?envType=study-plan-v2&envId=top-interview-150
+    public int sumNumbers(TreeNode root) {
+        return dfs(root, 0);
+    }
+
+    private int dfs(TreeNode node, int sum) {
+        // Base case: no node contributes 0 to the total sum
+        if (node == null) {
+            return 0;
+        }
+
+        // Build the current number
+        sum = sum * 10 + node.val;
+
+        // If leaf node, return the number formed
+        if (node.left == null && node.right == null) {
+            return sum;
+        }
+
+        // Recurse on left and right subtree
+        return  dfs(node.left, sum) + dfs(node.right, sum);
+    }
+
 
     /**
      * [Lowest Common Ancestor of a Binary Tree]
@@ -165,7 +229,7 @@ public class MediumBinaryTreeSolution {
 //https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/?envType=study-plan-v2&envId=top-interview-150
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         //base case: root = null | found p | found q
-        if (root == null || root == p || root == q){
+        if (root == null || root == p || root == q) {
             return root;
         }
 
@@ -181,8 +245,9 @@ public class MediumBinaryTreeSolution {
         return left == null ? right : left;
     }
 
+
     public static void preorderDfs(TreeNode node) {
-        if (node == null){
+        if (node == null) {
             return;
         }
 
@@ -210,8 +275,7 @@ public class MediumBinaryTreeSolution {
     }
 
 
-
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         TreeNode root = createTree();
 
         BinaryTreePrinter.print(root);

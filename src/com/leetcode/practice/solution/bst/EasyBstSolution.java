@@ -112,6 +112,32 @@ public class EasyBstSolution {
         return minDiff;
     }
 
+    public class BstDfs {
+        private TreeNode prev = null;
+        private int minDiff = Integer.MAX_VALUE;
+        public int getMinimumDifferenceDFS(TreeNode root){
+            inorder(root);
+            return minDiff;
+        }
+
+        public void inorder(TreeNode node) {
+            if (node == null ){
+                return;
+            }
+
+            getMinimumDifference(node.left);
+
+            if (prev != null) {
+                minDiff = Math.min(minDiff, node.val - prev.val);
+            }
+
+            prev = node;
+
+            getMinimumDifference(node.right);
+        }
+    }
+
+    //https://leetcode.com/problems/kth-smallest-element-in-a-bst/?envType=study-plan-v2&envId=top-interview-150
     /**
      * [Kth Smallest Element in a BST]
      *

@@ -80,7 +80,7 @@ public class EasyBinaryTreeSolution {
     public boolean isSameTree(TreeNode p, TreeNode q) {
         if (p == null && q == null) {
             return true;
-        } else if (p != null && q != null && p.val == q.val){
+        } else if (p != null && q != null && p.val == q.val) {
             return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
         }
 
@@ -98,13 +98,13 @@ public class EasyBinaryTreeSolution {
  */
 //https://leetcode.com/problems/symmetric-tree/?envType=study-plan-v2&envId=top-interview-150
     public boolean isSymmetric(TreeNode root) {
-        return isMirror(root,root);
+        return isMirror(root, root);
     }
 
     public boolean isMirror(TreeNode t1, TreeNode t2) {
         if (t1 == null && t2 == null) {
             return true;
-        } else if (t1 == null ||t2 == null) {
+        } else if (t1 == null || t2 == null) {
             return false;
         }
 
@@ -124,21 +124,22 @@ public class EasyBinaryTreeSolution {
  */
 //https://leetcode.com/problems/path-sum/description/?envType=study-plan-v2&envId=top-interview-150
     public boolean hasPathSum(TreeNode root, int targetSum) {
-        return hasPathSumDfs(0, root, targetSum);
-    }
-
-    public boolean hasPathSumDfs(int sum, TreeNode node, int targetSum) {
-        if (node == null){
+        // Base case: empty tree has no path
+        if (root == null) {
             return false;
         }
-        sum += node.val;
-        if (node.left == null && node.right == null){
-            return sum == targetSum;
+
+        // If this is a leaf node, check if the remaining sum matches
+        if (root.left == null && root.right == null) {
+            return targetSum == root.val;
         }
 
-        return hasPathSumDfs(sum, node.left, targetSum) || hasPathSumDfs(sum, node.right, targetSum);
+        // Subtract current node value from target sum
+        int remaining = targetSum - root.val;
+
+        // Recurse on left or right subtree
+        return hasPathSum(root.left, remaining)
+                || hasPathSum(root.right, remaining);
     }
-
-
 
 }
