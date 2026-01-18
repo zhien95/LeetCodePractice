@@ -38,4 +38,45 @@ public class MediumDpSolution {
 
         return prev;
     }
+
+    //https://leetcode.com/problems/minimum-falling-path-sum/
+    // ... existing code ...
+    //https://leetcode.com/problems/minimum-falling-path-sum/
+    public int minFallingPathSum(int[][] matrix) {
+        int n = matrix.length;
+        int[][] dp = new int[n][n];
+
+        for (int col = 0; col < n; col++){
+            dp[0][col] = matrix[0][col];
+        }
+
+        for (int row = 1; row < n; row++){
+            for (int col = 0; col < n; col++){
+                // Start with directly above (center)
+                int bestAbove = dp[row-1][col];
+
+                // Check diagonal left
+                if (col > 0){
+                    bestAbove = Math.min(bestAbove, dp[row-1][col-1]);
+                }
+
+                // Check diagonal right
+                if (col < n - 1){
+                    bestAbove = Math.min(bestAbove, dp[row-1][col + 1]);
+                }
+
+                dp[row][col] = matrix[row][col] + bestAbove;
+            }
+        }
+
+        int minPath = Integer.MAX_VALUE;
+
+        //last row stores final minPath based on final position
+        for (int col = 0; col < n; col++){
+            minPath = Math.min(minPath, dp[n-1][col]);
+        }
+
+        return minPath;
+    }
+
 }
