@@ -246,7 +246,7 @@ public class MediumGraphSolution {
 
     /**
      * [Game of Life]
- */
+     */
 //https://leetcode.com/problems/game-of-life/?envType=study-plan-v2&envId=top-interview-150
     public void gameOfLife(int[][] board) {
         int m = board.length, n = board[0].length;
@@ -283,7 +283,7 @@ public class MediumGraphSolution {
 
     /**
      * [Surrounded Regions]
- */
+     */
 //https://leetcode.com/problems/surrounded-regions/?envType=study-plan-v2&envId=top-interview-150
     public void solve(char[][] board) {
         int m = board.length, n = board[0].length;
@@ -385,7 +385,7 @@ public class MediumGraphSolution {
 
     /**
      * [Minimum Genetic Mutation]
- */
+     */
 //https://leetcode.com/problems/minimum-genetic-mutation/?envType=study-plan-v2&envId=top-interview-150
     public int minMutation(String start, String end, String[] bank) {
         Set<String> geneBank = new HashSet<>(Arrays.asList(bank));
@@ -573,6 +573,220 @@ public class MediumGraphSolution {
 
     }
 
+    public static class AccountsMergeSolution {
+        //disjoint union set
+        //use first email as anchor (parent/root) for each list of accounts
+        //do a union to accounts for each grow
+        //union find parent to establish all the emails based on anchor
+        //merge the name and all the emails tgt as output
+
+        private Map<String, String> nodeToParent = new HashMap<>();
+
+        //method to find parent
+        private String find(String x) {
+            if (!nodeToParent.get(x).equals(x)) {
+                nodeToParent.put(x, find(nodeToParent.get(x)));
+            }
+
+            return nodeToParent.get(x);
+        }
 
 
+        private void union(String a, String b) {
+            String rootA = find(a);
+            String rootB = find(b);
+
+            if (!rootA.equals(rootB)) {
+                nodeToParent.put(rootB, rootA);
+            }
+
+        }
+
+        /**
+         *
+         * Disjoined set union
+         *
+         * @param accounts list of accounts, where account[0] = name and the rest are emails
+         * @return merged accounts where account[0] = name, and remaining are email sorted lexigraphically
+         */
+        //https://leetcode.com/problems/accounts-merge/
+        public List<List<String>> accountsMerge(List<List<String>> accounts) {
+            Map<String, String> emailToName = new HashMap<>();
+
+            // Step 1: Initialize Union Find
+            for (List<String> account : accounts) {
+                String name = account.get(0);
+                for (int i = 1; i < account.size(); i++) {
+                    String email = account.get(i);
+
+                    nodeToParent.put(email, email); //init email as parents of itself
+                    emailToName.put(email, name); //record email and owner
+                }
+            }
+
+            // step 2: union emails of the same account
+            for (List<String> account : accounts) {
+                String firstEmail = account.get(1);
+                for (int i = 2; i < account.size(); i++) {
+                    String email = account.get(i);
+                    union(firstEmail, email);
+                }
+            }
+
+            Map<String, List<String>> groups = new HashMap<>();
+            //step 3 group emails by parent
+            for (String email : nodeToParent.keySet()) {
+                String root = find(email);
+                groups.computeIfAbsent(root, k -> new ArrayList<>()).add(email);
+            }
+
+            //step 4 form result
+            List<List<String>> result = new ArrayList<>();
+
+            for (String key : groups.keySet()) {
+                List<String> merged = new ArrayList<>();
+                List<String> emails = groups.get(key);
+                Collections.sort(emails);
+                String name = emailToName.get(emails.get(0));
+                merged.add(name);
+                merged.addAll(emails);
+
+                result.add(merged);
+            }
+
+            return result;
+        }
+    }
+
+
+    public static class CountComponentSolution {
+        private int[] parent;
+        private int[] rank;
+
+        /**
+         * [Number of Connected Components in an Undirected Graph]
+         * <p>
+         * Counts the number of connected components in an undirected graph with n nodes.
+         * A connected component is a subset of nodes where each node is reachable from every other node in the subset.
+         *
+         * @param n     Number of nodes in the graph
+         * @param edges List of edges connecting the nodes
+         * @return The number of connected components in the graph
+         */
+        public int countComponent(int n, int[][] edges) {
+            parent = new int[n];
+            rank = new int[n];
+
+            for (int i = 0; i < n; i++) {
+                parent[i] = i; // Initialize each node to be its own parent
+            }
+
+            int res = n;
+            for (int[] edge : edges) {
+                int n1 = edge[0];
+                int n2 = edge[1];
+
+                res -= union(n1, n2);
+            }
+
+            return res;
+        }
+
+        private int find(int node) {
+            int res = node;
+            while (res != parent[res]) {
+                parent[res] = parent[parent[res]];
+                res = parent[res];
+            }
+
+            return res;
+        }
+
+        /**
+         * union node 1 and node 2, assigning higher rank node as parent and update rank
+         *
+         * @param n1
+         * @param n2
+         * @return return 1 if successful else 0
+         */
+        private int union(int n1, int n2) {
+            int root1 = find(n1);
+            int root2 = find(n2);
+
+            if (root1 == root2) {
+                return 0;
+            }
+
+            if (rank[root2] > rank[root1]) {
+                parent[root1] = root2;
+                rank[root2] += rank[root1];
+
+            } else {
+                parent[root2] = root1;
+                rank[root1] += rank[root2];
+            }
+
+            return 1;
+        }
+    }
+
+    //https://leetcode.com/problems/count-the-number-of-complete-components/description/
+    public class CountCompleteComponentSolution {
+
+        /**
+         * Counts the number of complete connected components in an undirected graph.
+         * A connected component is complete if there is an edge between every pair of its vertices.
+         * <p>
+         * Problem: Given an integer n and a 2D array edges representing connections between vertices,
+         * return the number of complete connected components in the graph.
+         * <p>
+         * A complete component of size k has exactly k*(k-1)/2 edges between its vertices.
+         *
+         * @param n     Number of vertices in the graph
+         * @param edges Array of edges where each edge connects two vertices
+         * @return The number of complete connected components in the graph
+         */
+        public int countCompleteComponents(int n, int[][] edges) {
+            // Adjacency lists for each vertex
+            List<Integer>[] graph = new ArrayList[n];
+            // Map to store frequency of each unique adjacency list
+            Map<List<Integer>, Integer> componentFreq = new HashMap<>();
+
+            // Initialize adjacency lists with self-loops
+            for (int vertex = 0; vertex < n; vertex++) {
+                graph[vertex] = new ArrayList<>();
+                graph[vertex].add(vertex);
+            }
+
+            // Build adjacency lists from edges
+            for (int[] edge : edges) {
+                graph[edge[0]].add(edge[1]);
+                graph[edge[1]].add(edge[0]);
+            }
+
+            // Count frequency of each unique adjacency pattern
+            // Vertices belonging to the same connected component will have identical adjacency lists
+            // (after sorting, since order of neighbors might vary)
+            for (int vertex = 0; vertex < n; vertex++) {
+                List<Integer> neighbors = graph[vertex];
+                Collections.sort(neighbors); // Sort to ensure identical components have identical lists
+                componentFreq.put(neighbors, componentFreq.getOrDefault(neighbors, 0) + 1);
+            }
+
+            // Count complete components where the size of adjacency list equals the frequency
+            // In a complete component of size k, each vertex has exactly k neighbors (including itself)
+            // This is because in a complete graph, each vertex connects to all other vertices in the component
+            int completeCount = 0;
+            for (Map.Entry<List<Integer>, Integer> entry : componentFreq.entrySet()) {
+                // entry.getKey().size() is the number of vertices in this component (neighbors + vertex itself)
+                // entry.getValue() is how many vertices have this exact adjacency list (size of component)
+                // For a complete component: component_size == number_of_vertices_in_adjacency_list
+                if (entry.getKey().size() == entry.getValue()) {
+                    completeCount++;
+                }
+            }
+
+            return completeCount;
+        }
+    }
 }
