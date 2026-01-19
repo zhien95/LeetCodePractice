@@ -30,6 +30,24 @@ public class MediumMathSolution {
         return count;
     }
 
+    //https://leetcode.com/problems/reverse-integer/
+    public int reverse(int x) {
+        int result = 0;
+
+        while (x != 0) {
+            int digit = x % 10;
+            if (result > Integer.MAX_VALUE / 10 || result < Integer.MIN_VALUE / 10) {
+                return 0;
+            }
+
+            result = result * 10 + digit;
+            x /= 10;
+        }
+
+        return result;
+
+    }
+
 
     // function to convert epoch to date key with 4 hour interval
     public String convertEpochToDateKeyWith4HourInterval(long epochSeconds) {

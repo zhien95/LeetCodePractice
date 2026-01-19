@@ -1,7 +1,5 @@
 package com.leetcode.practice.solution.heap;
 
-import com.leetcode.practice.solution.data.ListNode;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,6 +51,7 @@ public class MediumHeapSolution {
             if (j + 1 < nums2.length) {
                 minHeap.offer(new int[]{i, j + 1});
             }
+
         }
 
         return result;

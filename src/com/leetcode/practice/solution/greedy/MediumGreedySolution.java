@@ -1,11 +1,19 @@
 package com.leetcode.practice.solution.greedy;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 public class MediumGreedySolution {
     /**
+     * [Sell Diminishing-Valued Colored Balls]
+     */
+    //https://leetcode.com/problems/sell-diminishing-valued-colored-balls/description/
+    private static final int MOD = 1_000_000_007;
+
+    /**
      * [Greedy Florist]
-     *
+     * <p>
      * Calculates the minimum cost to purchase all flowers when the price of each flower
      * increases based on how many flowers the same person has already bought.
      * Implements a greedy approach by sorting flowers in descending order and assigning
@@ -31,42 +39,32 @@ public class MediumGreedySolution {
         return total;
     }
 
-
-    /**
-     * [Sell Diminishing-Valued Colored Balls]
-     */
-//https://leetcode.com/problems/sell-diminishing-valued-colored-balls/description/
     public int maxProfit(int[] inventory, int orders) {
-        final int MOD = 1_000_000_007;
-        Arrays.sort(inventory);
-        int n = inventory.length;
-        long res = 0;
-        int k = 1;
+        // Max heap to always sell the highest value ball
+        PriorityQueue<Integer> maxHeap =
+                new PriorityQueue<>(Collections.reverseOrder());
 
-        for (int i = n - 1; i >= 0 && orders > 0; --i, ++k) {
-            int cur = inventory[i];
-            int next = (i > 0 ? inventory[i - 1] : 0);
-
-            if (cur > next) {
-                long diff = cur - next;
-                long totalBalls = diff * k;
-                if (orders >= totalBalls) {
-                    long sum = (long) (cur + next + 1) * diff / 2;
-                    res = (res + sum * k) % MOD;
-                    orders -= totalBalls;
-                } else {
-                    long full = orders / k;
-                    long rem = orders % k;
-                    long low = cur - full;
-                    long sum = (cur + low + 1) * full / 2;
-                    res = (res + sum * k) % MOD;
-                    res = (res + rem * low) % MOD;
-                    orders = 0;
-                }
-            }
+        // Add all inventory counts to heap
+        for (int val : inventory) {
+            maxHeap.offer(val);
         }
 
-        return (int) (res % MOD);
+        long profit = 0;
+
+        // Sell balls one by one
+        while (orders > 0 && !maxHeap.isEmpty()) {
+            int top = maxHeap.poll();   // highest valued ball
+            profit = (profit + top) % MOD;
+
+            // Decrease the value and reinsert if still positive
+            if (top - 1 > 0) {
+                maxHeap.offer(top - 1);
+            }
+
+            orders--;
+        }
+
+        return (int) profit;
     }
 
 

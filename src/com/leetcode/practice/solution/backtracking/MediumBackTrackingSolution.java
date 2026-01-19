@@ -289,4 +289,66 @@ public class MediumBackTrackingSolution {
 
         return true;
     }
+
+    public class PermuteWithDuplicates {
+
+        public static List<List<Integer>> permutePrune(int[] nums) {
+            List<List<Integer>> res = new ArrayList<>();
+            boolean[] used = new boolean[nums.length];
+            int[] lastPerm = new int[nums.length]; // last full permutation
+            Arrays.fill(lastPerm, Integer.MIN_VALUE); // sentinel
+            backtrack(nums, new ArrayList<>(), used, res, lastPerm);
+            return res;
+        }
+
+        private static void backtrack(int[] nums, List<Integer> path, boolean[] used, List<List<Integer>> res, int[] lastPerm) {
+            if (path.size() == nums.length) {
+                // Add current permutation
+                res.add(new ArrayList<>(path));
+                // Update lastPerm
+                for (int i = 0; i < nums.length; i++) lastPerm[i] = path.get(i);
+                return;
+            }
+
+            for (int i = 0; i < nums.length; i++) {
+                if (used[i]) continue; // already used in current path
+
+                // Prune: check if current path + nums[i] is already smaller than lastPerm
+                boolean prune = false;
+                for (int j = 0; j < path.size(); j++) {
+                    if (path.get(j) < lastPerm[j]) {
+                        prune = true;
+                        break;
+                    } else if (path.get(j) > lastPerm[j]) {
+                        break;
+                    }
+                }
+                // Check current number at this depth
+                if (!prune && path.size() < lastPerm.length && nums[i] < lastPerm[path.size()]) {
+                    prune = true;
+                }
+
+                if (prune) continue;
+
+                // Choose
+                path.add(nums[i]);
+                used[i] = true;
+
+                backtrack(nums, path, used, res, lastPerm);
+
+                // Backtrack
+                used[i] = false;
+                path.remove(path.size() - 1);
+            }
+        }
+
+        public static void main(String[] args) {
+            int[] nums = {3, 1, 2, 2}; // duplicates allowed
+            List<List<Integer>> permutations = permutePrune(nums);
+            for (List<Integer> p : permutations) {
+                System.out.println(p);
+            }
+        }
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.leetcode.practice.solution.interval;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 public class MediumIntervalSolution {
@@ -106,6 +105,50 @@ public class MediumIntervalSolution {
         }
 
         return arrows;
+    }
+
+
+    public static void main(String[] args) {
+        int[] a = {1, 523, 4, 5, 7};
+        int[] b = {1, 237, 45, 1, 8};
+
+        String longestPrefix = LongestPrefix.findLongestPrefix(a, b);
+        System.out.println("Longest prefix: " + longestPrefix);
+    }
+
+    public static class LongestPrefix {
+
+        public static String findLongestPrefix(int[] a, int[] b) {
+            String result = "";
+
+            for (int i = 0; i < Math.min(a.length, b.length); i++) {
+                String s1 = String.valueOf(a[i]);
+                String s2 = String.valueOf(b[i]);
+                String prefix = longestCommonSubstring(s1, s2);
+                if (prefix.length() > result.length()) {
+                    result = prefix;
+                }
+            }
+
+            return result;
+        }
+
+        // Finds the longest common substring starting at any position
+        public static String longestCommonSubstring(String s1, String s2) {
+            String longest = "";
+            for (int i = 0; i < s1.length(); i++) {
+                for (int j = 0; j < s2.length(); j++) {
+                    int k = 0;
+                    while (i + k < s1.length() && j + k < s2.length() && s1.charAt(i + k) == s2.charAt(j + k)) {
+                        k++;
+                    }
+                    if (k > longest.length()) {
+                        longest = s1.substring(i, i + k);
+                    }
+                }
+            }
+            return longest;
+        }
     }
 
 }

@@ -1,7 +1,5 @@
 package com.leetcode.practice.solution.graph;
 
-import com.leetcode.practice.solution.linkedList.MediumLinkedListSolution;
-
 import java.util.*;
 
 public class MediumGraphSolution {
@@ -88,7 +86,7 @@ public class MediumGraphSolution {
         int count = 0;
 
         int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
-        Deque<int[]> stack = new ArrayDeque<>();
+        Stack<int[]> stack = new Stack<>();
 
         for (int r = 0; r < m; r++) {
             for (int c = 0; c < n; c++) {
@@ -424,5 +422,157 @@ public class MediumGraphSolution {
 
         return -1;
     }
+
+    //https://leetcode.com/problems/course-schedule/submissions/1655737065/?envType=study-plan-v2&envId=top-interview-150
+    static class CourseScheduleDfs {
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            //build graph
+            List<List<Integer>> graph = new ArrayList<>();
+            for (int i = 0; i < numCourses; i++) {
+                graph.add(new ArrayList<>());
+            }
+            //[0,1] = 1 -> 0
+            for (int[] r : prerequisites) {
+                graph.get(r[1]).add(r[0]);
+            }
+            //start from vertex with no inward edges, traverse graph
+            boolean[] visited = new boolean[numCourses];
+            boolean[] recStack = new boolean[numCourses];
+
+            for (int i = 0; i < numCourses; i++) {
+                if (!visited[i] && isCyclic(i, visited, recStack, graph)) {
+                    return false;
+
+                }
+            }
+
+            return true;
+        }
+
+        public boolean isCyclic(int node, boolean[] visited, boolean[] recStack, List<List<Integer>> graph) {
+            visited[node] = true;
+            recStack[node] = true;
+            for (int neighbour : graph.get(node)) {
+                if (!visited[neighbour]) {
+                    if (isCyclic(neighbour, visited, recStack, graph)) {
+                        return true;
+                    }
+                } else if (recStack[neighbour]) {
+                    return true; //back edge -> cycle
+                }
+            }
+
+            recStack[node] = false; // done exploring node
+            return false;
+        }
+    }
+
+    static class CourseScheduleBfs {
+        /**
+         * Solves the Course Schedule problem using topological sorting.
+         * <p>
+         * Model:
+         * - Courses are nodes
+         * - Prerequisites form directed edges (pre → course)
+         * <p>
+         * Approach:
+         * - Build graph and indegree array
+         * - Use Kahn’s Algorithm to remove courses with no prerequisites
+         * <p>
+         * Cycle Detection:
+         * - If all courses are processed, schedule is possible
+         * <p>
+         * Time Complexity: O(V + E)
+         * Space Complexity: O(V + E)
+         */
+        //https://leetcode.com/problems/course-schedule/submissions/1655737065/?envType=study-plan-v2&envId=top-interview-150
+        // 1 <- 0, 2 <- 1 == [[], [1], [2]]
+        //  indegrees = [0, 1, 1]
+        public boolean canFinish(int numCourses, int[][] prerequisites) {
+            List<List<Integer>> graph = new ArrayList<>();
+
+            for (int i = 0; i < numCourses; i++) {
+                graph.add(new ArrayList<>());
+            }
+
+            int[] indegree = new int[numCourses];
+
+            for (int[] prerequisite : prerequisites) {
+                int course = prerequisite[0];
+                int pre = prerequisite[1];
+                graph.get(pre).add(course);
+                indegree[course]++;
+            }
+
+            Queue<Integer> q = new ArrayDeque<>();
+
+            for (int course = 0; course < numCourses; course++) {
+                if (indegree[course] == 0) {
+                    q.offer(course);
+                }
+            }
+            int taken = 0;
+
+            while (!q.isEmpty()) {
+                int course = q.poll();
+                taken++;
+                for (int neighbour : graph.get(course)) {
+                    if (--indegree[neighbour] == 0) {
+                        q.offer(neighbour);
+                    }
+                }
+            }
+
+            return taken == numCourses;
+        }
+
+        //https://leetcode.com/problems/course-schedule-ii/description/
+        public int[] findOrder(int numCourses, int[][] prerequisites) {
+            //use graph to create course to adjacent list
+            Map<Integer, List<Integer>> graph = new HashMap<>();
+
+            //init empty adj list
+            for (int i = 0; i < numCourses; i++) {
+                graph.put(i, new ArrayList<>());
+            }
+
+            int[] indegree = new int[numCourses];
+
+            //build graph and indegree
+            for (int[] p : prerequisites) {
+                int course = p[0];
+                int pre = p[1];
+                graph.get(pre).add(course);
+                indegree[course]++;
+            }
+
+            //Queue to add courses with 0 indegree
+            Queue<Integer> q = new ArrayDeque<>();
+            for (int course = 0; course < numCourses; course++) {
+                if (indegree[course] == 0) {
+                    q.offer(course);
+                }
+            }
+
+            int taken = 0;
+            int[] order = new int[numCourses];
+
+            while (!q.isEmpty()) {
+                int course = q.poll();
+                order[taken] = course;
+
+                for (int neighbour : graph.get(course)) {
+                    if (--indegree[neighbour] == 0) {
+                        q.offer(neighbour);
+                    }
+                }
+            }
+
+            return taken == numCourses ? order : new int[0];
+        }
+
+    }
+
+
 
 }
