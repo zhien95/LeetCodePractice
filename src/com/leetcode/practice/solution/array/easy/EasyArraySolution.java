@@ -166,12 +166,7 @@ public class EasyArraySolution {
             i++;
         }
 
-        /**
-        @developer asdaa
-         */
-
         return -1;
-
     }
 
 }

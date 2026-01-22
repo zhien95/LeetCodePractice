@@ -33,25 +33,35 @@ public class MediumArraySolution {
         return index;
     }
 
-    public int[] removeDuplicates2(int[] nums) {
-        int n = nums.length;
-        int index = 0;
-        int count = 0;
-        for (int i = 1; i < n; i++) {
-            if (nums[i] == nums[i -1]){
-                count++;
+    public static List<Integer> getRemovableIndex(String str1, String str2) {
+        if (str1.length() != str2.length() + 1) return Arrays.asList(-1);
+
+        int i = 0, j = 0;
+        int skippedIdx = 0;
+
+        // Allow skipping one mismatched character
+        while (i < str1.length() && j < str2.length()) {
+            if (str1.charAt(i) == str2.charAt(j)) {
+                i++;
+                j++;
             } else {
-                count = 1;
+                // Skip one char in str1 (at index i)
+                if (str1.substring(i + 1).equals(str2.substring(j))) {
+                    skippedIdx = i;
+                    break;
+                } else {
+                    return Arrays.asList(-1);
+                }
             }
-
-            if (count <= 2) {
-                nums[index++] = nums[i];
-            }
-
-            return nums;
         }
 
-        return nums;
+        List<Integer> result = new ArrayList<>();
+        result.add(skippedIdx);
+        while (skippedIdx + 1 < str1.length() && str1.charAt(skippedIdx) == str1.charAt(skippedIdx + 1)) {
+            result.add(skippedIdx + 1);
+        }
+
+        return result;
     }
 
     /**
@@ -118,9 +128,30 @@ public class MediumArraySolution {
         return output;
     }
 
+    public int[] removeDuplicates2(int[] nums) {
+        int n = nums.length;
+        int index = 0;
+        int count = 0;
+        for (int i = 1; i < n; i++) {
+            if (nums[i] == nums[i - 1]) {
+                count++;
+            } else {
+                count = 1;
+            }
+
+            if (count <= 2) {
+                nums[index++] = nums[i];
+            }
+
+            return nums;
+        }
+
+        return nums;
+    }
+
     /**
      * [Gas Station]
- */
+     */
 //https://leetcode.com/problems/gas-station/?envType=study-plan-v2&envId=top-interview-150
     public int canCompleteCircuit(int[] gas, int[] cost) {
         int totalTank = 0;
@@ -144,7 +175,7 @@ public class MediumArraySolution {
 
     /**
      * [Reverse Words in a String]
- */
+     */
 //https://leetcode.com/problems/reverse-words-in-a-string/?envType=study-plan-v2&envId=top-interview-150
     public String reverseWords(String s) {
         // Trim leading and trailing spaces, then split by one or more spaces
@@ -159,44 +190,6 @@ public class MediumArraySolution {
             if (i != 0) {
                 result.append(" ");
             }
-        }
-
-        return result.toString();
-    }
-
-    /**
-     * [Zigzag Conversion]
- */
-//https://leetcode.com/problems/zigzag-conversion/?envType=study-plan-v2&envId=top-interview-150
-    public String convert(String s, int numRows) {
-        if (numRows == 1 || s.length() <= numRows) return s;
-
-        // Initialize an array of StringBuilder for each row
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) {
-            rows[i] = new StringBuilder();
-        }
-
-        int currentRow = 0;
-        boolean goingDown = false;
-
-        // Iterate through the characters in the string
-        for (int i = 0; i < s.length(); i++) {
-            rows[currentRow].append(s.charAt(i));
-
-            // Change direction when we hit the top or bottom row
-            if (currentRow == 0 || currentRow == numRows - 1) {
-                goingDown = !goingDown;
-            }
-
-            // Move up or down the rows
-            currentRow += goingDown ? 1 : -1;
-        }
-
-        // Combine all rows into a single string
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder row : rows) {
-            result.append(row);
         }
 
         return result.toString();
@@ -309,35 +302,104 @@ public class MediumArraySolution {
         }
     }
 
-    public static List<Integer> getRemovableIndex(String str1, String str2) {
-        if (str1.length() != str2.length() + 1) return Arrays.asList(-1);
+    /**
+     * [Zigzag Conversion]
+     */
+//https://leetcode.com/problems/zigzag-conversion/?envType=study-plan-v2&envId=top-interview-150
+    public String convert(String s, int numRows) {
+        if (numRows == 1 || s.length() <= numRows) return s;
 
-        int i = 0, j = 0;
-        int skippedIdx = 0;
+        // Initialize an array of StringBuilder for each row
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
+        }
 
-        // Allow skipping one mismatched character
-        while (i < str1.length() && j < str2.length()) {
-            if (str1.charAt(i) == str2.charAt(j)) {
-                i++;
-                j++;
-            } else {
-                // Skip one char in str1 (at index i)
-                if (str1.substring(i + 1).equals(str2.substring(j))){
-                    skippedIdx = i;
-                    break;
-                } else {
-                    return Arrays.asList(-1);
-                }
+        int currentRow = 0;
+        boolean goingDown = false;
+
+        // Iterate through the characters in the string
+        for (int i = 0; i < s.length(); i++) {
+            rows[currentRow].append(s.charAt(i));
+
+            // Change direction when we hit the top or bottom row
+            if (currentRow == 0 || currentRow == numRows - 1) {
+                goingDown = !goingDown;
+            }
+
+            // Move up or down the rows
+            currentRow += goingDown ? 1 : -1;
+        }
+
+        // Combine all rows into a single string
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
+        }
+
+        return result.toString();
+    }
+
+    public class NextPermutationSolution {
+        /**
+         * [Next Permutation]
+         * Finds the next lexicographically greater permutation of the given array.
+         * The replacement is done in-place and uses only constant extra memory.
+         *
+         * @param nums Array of integers to transform to next permutation
+         */
+        //https://leetcode.com/problems/next-permutation/
+        public void nextPermutation(int[] nums) {
+            // Example trace for arr = [1,2,3]:
+            // 1) Find rightmost i where nums[i] < nums[i+1] -> i = 1 (nums[1] = 2, nums[2] = 3)
+            // 2) Find rightmost j where nums[i] < nums[j] -> j = 2 (nums[1] = 2 < nums[2] = 3)
+            // 3) Swap nums[1] and nums[2] -> [1,3,2]
+            // 4) Reverse subarray from i+1 to end -> [1,3,2] (no change since only one element after i)
+            // Result: [1,3,2] (next permutation after [1,2,3])
+
+            //1,3,4,2 -> 1,4,3,2
+            //1,3,2,4 -> 1,3,4,2
+            int n = nums.length;
+
+            if (n <= 1) return;
+
+            // Step 1: Find the largest index i such that nums[i] < nums[i + 1]
+            int i = n - 2;
+            while (i >= 0 && nums[i] >= nums[i + 1]) {
+                i--;
+            }
+
+            // If such index doesn't exist, reverse the whole array (last permutation -> first permutation)
+            if (i < 0) {
+                // Reverse the entire array
+                reverse(nums, 0, n - 1);
+                return;
+            }
+
+            // Step 2: Find the largest index j such that nums[i] < nums[j]
+            int j = n - 1;
+            while (nums[j] <= nums[i]) {
+                j--;
+            }
+
+            // Step 3: Swap nums[i] and nums[j]
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+
+            // Step 4: Reverse the sub-array from i+1 to end
+            reverse(nums, i + 1, n - 1);
+        }
+
+        private void reverse(int[] nums, int left, int right) {
+            while (left < right) {
+                int temp = nums[left];
+                nums[left] = nums[right];
+                nums[right] = temp;
+                left++;
+                right--;
             }
         }
-
-        List<Integer> result = new ArrayList<>();
-        result.add(skippedIdx);
-        while (skippedIdx + 1 < str1.length() && str1.charAt(skippedIdx) == str1.charAt(skippedIdx + 1)) {
-            result.add(skippedIdx + 1);
-        }
-
-        return result;
     }
 
 }

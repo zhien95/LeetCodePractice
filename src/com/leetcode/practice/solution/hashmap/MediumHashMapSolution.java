@@ -134,7 +134,41 @@ public class MediumHashMapSolution {
     }
 
     public static void main(String[] args) {
-        MediumHashMapSolution solution = new MediumHashMapSolution();
-        System.out.println(Arrays.toString(solution.topKFrequent(new int[] {1,1,1,2,2,3}, 2)));
+        System.out.println('a' - 'b');
+    }
+
+    //https://leetcode.com/problems/can-convert-string-in-k-moves/description/
+    public boolean canConvertString(String s, String t, int k) {
+        // Length mismatch → impossible
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        // Count how many times each shift (1..25) has appeared
+        // Key: shift value, Value: frequency
+        Map<Integer, Integer> shiftCount = new HashMap<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            char from = s.charAt(i);
+            char to = t.charAt(i);
+
+            if (from == to) {
+                continue;
+            }
+
+            int shift = to - from;
+            shift = shift >= 0 ? shift : shift + 26;
+
+            int used = shiftCount.getOrDefault(shift, 0);
+            int times = shift + used * 26;
+
+            if (k < times) {
+                return false;
+            }
+
+            shiftCount.put(shift, used + 1);
+        }
+
+        return true;
     }
 }

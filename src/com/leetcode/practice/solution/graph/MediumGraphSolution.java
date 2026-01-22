@@ -580,15 +580,15 @@ public class MediumGraphSolution {
         //union find parent to establish all the emails based on anchor
         //merge the name and all the emails tgt as output
 
-        private Map<String, String> nodeToParent = new HashMap<>();
+        private Map<String, String> parent = new HashMap<>();
 
         //method to find parent
         private String find(String x) {
-            if (!nodeToParent.get(x).equals(x)) {
-                nodeToParent.put(x, find(nodeToParent.get(x)));
+            if (!parent.get(x).equals(x)) {
+                parent.put(x, find(parent.get(x)));
             }
 
-            return nodeToParent.get(x);
+            return parent.get(x);
         }
 
 
@@ -597,7 +597,7 @@ public class MediumGraphSolution {
             String rootB = find(b);
 
             if (!rootA.equals(rootB)) {
-                nodeToParent.put(rootB, rootA);
+                parent.put(rootB, rootA);
             }
 
         }
@@ -619,7 +619,7 @@ public class MediumGraphSolution {
                 for (int i = 1; i < account.size(); i++) {
                     String email = account.get(i);
 
-                    nodeToParent.put(email, email); //init email as parents of itself
+                    parent.put(email, email); //init email as parents of itself
                     emailToName.put(email, name); //record email and owner
                 }
             }
@@ -635,7 +635,7 @@ public class MediumGraphSolution {
 
             Map<String, List<String>> groups = new HashMap<>();
             //step 3 group emails by parent
-            for (String email : nodeToParent.keySet()) {
+            for (String email : parent.keySet()) {
                 String root = find(email);
                 groups.computeIfAbsent(root, k -> new ArrayList<>()).add(email);
             }
@@ -661,7 +661,7 @@ public class MediumGraphSolution {
 
     public static class CountComponentSolution {
         private int[] parent;
-        private int[] rank;
+        private int[] size;
 
         /**
          * [Number of Connected Components in an Undirected Graph]
@@ -675,10 +675,11 @@ public class MediumGraphSolution {
          */
         public int countComponent(int n, int[][] edges) {
             parent = new int[n];
-            rank = new int[n];
+            size = new int[n];
 
             for (int i = 0; i < n; i++) {
                 parent[i] = i; // Initialize each node to be its own parent
+                size[i] = 1;
             }
 
             int res = n;
@@ -693,13 +694,11 @@ public class MediumGraphSolution {
         }
 
         private int find(int node) {
-            int res = node;
-            while (res != parent[res]) {
-                parent[res] = parent[parent[res]];
-                res = parent[res];
+            if (parent[node] != node) {
+                parent[node] = find(parent[node]);
             }
 
-            return res;
+            return parent[node];
         }
 
         /**
@@ -717,13 +716,13 @@ public class MediumGraphSolution {
                 return 0;
             }
 
-            if (rank[root2] > rank[root1]) {
+            if (size[root2] > size[root1]) {
                 parent[root1] = root2;
-                rank[root2] += rank[root1];
+                size[root2] += size[root1];
 
             } else {
                 parent[root2] = root1;
-                rank[root1] += rank[root2];
+                size[root1] += size[root2];
             }
 
             return 1;
@@ -731,7 +730,34 @@ public class MediumGraphSolution {
     }
 
     //https://leetcode.com/problems/count-the-number-of-complete-components/description/
-    public class CountCompleteComponentSolution {
+    class CountCompleteComponentSolution {
+        int[] parent;
+        int[] rank;
+
+        // Find with path compression
+        private int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
+
+        // Union by rank
+        private void union(int a, int b) {
+            int rootA = find(a);
+            int rootB = find(b);
+
+            if (rootA == rootB) return;
+
+            if (rank[rootA] < rank[rootB]) {
+                parent[rootA] = rootB;
+            } else if (rank[rootA] > rank[rootB]) {
+                parent[rootB] = rootA;
+            } else {
+                parent[rootB] = rootA;
+                rank[rootA]++;
+            }
+        }
 
         /**
          * Counts the number of complete connected components in an undirected graph.
@@ -747,46 +773,45 @@ public class MediumGraphSolution {
          * @return The number of complete connected components in the graph
          */
         public int countCompleteComponents(int n, int[][] edges) {
-            // Adjacency lists for each vertex
-            List<Integer>[] graph = new ArrayList[n];
-            // Map to store frequency of each unique adjacency list
-            Map<List<Integer>, Integer> componentFreq = new HashMap<>();
+            parent = new int[n];
+            rank = new int[n];
 
-            // Initialize adjacency lists with self-loops
-            for (int vertex = 0; vertex < n; vertex++) {
-                graph[vertex] = new ArrayList<>();
-                graph[vertex].add(vertex);
+            //step1 init parent and rank
+            for (int i = 0; i < n; i++) {
+                parent[i] = i;
             }
 
-            // Build adjacency lists from edges
+            //step2 union edges
             for (int[] edge : edges) {
-                graph[edge[0]].add(edge[1]);
-                graph[edge[1]].add(edge[0]);
+                union(edge[0], edge[1]);
             }
 
-            // Count frequency of each unique adjacency pattern
-            // Vertices belonging to the same connected component will have identical adjacency lists
-            // (after sorting, since order of neighbors might vary)
-            for (int vertex = 0; vertex < n; vertex++) {
-                List<Integer> neighbors = graph[vertex];
-                Collections.sort(neighbors); // Sort to ensure identical components have identical lists
-                componentFreq.put(neighbors, componentFreq.getOrDefault(neighbors, 0) + 1);
+            //step3 count component
+            Map<Integer, Integer> componentCount = new HashMap<>();
+            for (int i = 0; i < n; i++) {
+                int root = find(i);
+                componentCount.put(root, componentCount.getOrDefault(root, 0) + 1);
             }
 
-            // Count complete components where the size of adjacency list equals the frequency
-            // In a complete component of size k, each vertex has exactly k neighbors (including itself)
-            // This is because in a complete graph, each vertex connects to all other vertices in the component
-            int completeCount = 0;
-            for (Map.Entry<List<Integer>, Integer> entry : componentFreq.entrySet()) {
-                // entry.getKey().size() is the number of vertices in this component (neighbors + vertex itself)
-                // entry.getValue() is how many vertices have this exact adjacency list (size of component)
-                // For a complete component: component_size == number_of_vertices_in_adjacency_list
-                if (entry.getKey().size() == entry.getValue()) {
-                    completeCount++;
+            //step4 count edges
+            Map<Integer, Integer> edgeCount = new HashMap<>();
+            for (int[] edge : edges) {
+                int root = find(edge[0]);
+                edgeCount.put(root, edgeCount.getOrDefault(root, 0) + 1);
+            }
+
+            //step5 count complete components
+            int result = 0;
+            for (int node : componentCount.keySet()) {
+                int nodes = componentCount.get(node);
+                int edgeNum = edgeCount.getOrDefault(node, 0);
+
+                if (edgeNum == nodes * (nodes - 1) / 2) {
+                    result++;
                 }
             }
 
-            return completeCount;
+            return result;
         }
     }
 }
