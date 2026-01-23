@@ -1,5 +1,8 @@
 package com.leetcode.practice.solution.dp;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * [House Robber]
  */
@@ -39,44 +42,81 @@ public class MediumDpSolution {
         return prev;
     }
 
-    //https://leetcode.com/problems/minimum-falling-path-sum/
-    // ... existing code ...
+
     //https://leetcode.com/problems/minimum-falling-path-sum/
     public int minFallingPathSum(int[][] matrix) {
         int n = matrix.length;
-        int[][] dp = new int[n][n];
 
-        for (int col = 0; col < n; col++){
-            dp[0][col] = matrix[0][col];
+        // dp[col] = min falling path sum ending at column col of the previous row
+        int[] dp = new int[n];
+
+        // Initialize with the first row
+        for (int col = 0; col < n; col++) {
+            dp[col] = matrix[0][col];
         }
 
-        for (int row = 1; row < n; row++){
-            for (int col = 0; col < n; col++){
-                // Start with directly above (center)
-                int bestAbove = dp[row-1][col];
+        // Build DP row by row
+        for (int row = 1; row < n; row++) {
+            int[] next = new int[n];
 
-                // Check diagonal left
-                if (col > 0){
-                    bestAbove = Math.min(bestAbove, dp[row-1][col-1]);
+            for (int col = 0; col < n; col++) {
+                int minAbove = dp[col]; // directly above
+
+                if (col > 0) {
+                    minAbove = Math.min(minAbove, dp[col - 1]); // diagonal left
                 }
 
-                // Check diagonal right
-                if (col < n - 1){
-                    bestAbove = Math.min(bestAbove, dp[row-1][col + 1]);
+                if (col < n - 1) {
+                    minAbove = Math.min(minAbove, dp[col + 1]); // diagonal right
                 }
 
-                dp[row][col] = matrix[row][col] + bestAbove;
+                next[col] = matrix[row][col] + minAbove;
+            }
+
+            dp = next; // move to next row
+        }
+
+        // Answer is the minimum value in the last DP row
+        int result = Integer.MAX_VALUE;
+        for (int val : dp) {
+            result = Math.min(result, val);
+        }
+
+        return result;
+    }
+
+    //[1,2,3] target = 3
+
+
+    //https://leetcode.com/problems/target-sum/
+    public int findTargetSumWays(int[] nums, int target) {
+        Map<String, Integer> memo = new HashMap<>();
+        return dfs(nums, target, 0, memo);
+    }
+
+    private int dfs(int[] nums, int target, int pos, Map<String, Integer> memo) {
+        if (pos == nums.length) {
+            if (target == 0) {
+                return 1;
+            } else {
+                return 0;
             }
         }
 
-        int minPath = Integer.MAX_VALUE;
-
-        //last row stores final minPath based on final position
-        for (int col = 0; col < n; col++){
-            minPath = Math.min(minPath, dp[n-1][col]);
+        String key = pos + "," + target;
+        if (memo.containsKey(key)) {
+            return memo.get(key);
         }
 
-        return minPath;
+        int res = 0;
+        res += dfs(nums, target + nums[pos], pos + 1, memo);
+        res += dfs(nums, target - nums[pos], pos + 1, memo);
+
+        memo.put(key, res);
+
+
+        return res;
     }
+
 
 }

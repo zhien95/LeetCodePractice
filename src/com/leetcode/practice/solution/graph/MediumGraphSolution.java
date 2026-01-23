@@ -528,7 +528,7 @@ public class MediumGraphSolution {
 
         //https://leetcode.com/problems/course-schedule-ii/description/
         public int[] findOrder(int numCourses, int[][] prerequisites) {
-            //use graph to create course to adjacent list
+            //use graph to create a course to an adjacent list
             Map<Integer, List<Integer>> graph = new HashMap<>();
 
             //init empty adj list

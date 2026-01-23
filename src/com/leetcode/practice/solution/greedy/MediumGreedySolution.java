@@ -69,17 +69,29 @@ public class MediumGreedySolution {
 
     //https://leetcode.com/problems/flip-string-to-monotone-increasing/
     public int minFlipsMonoIncr(String s) {
-        int ones = 0;
-        int flips = 0;
+        int totalZeroCount = 0;
 
         for (char c : s.toCharArray()) {
-            if (c == '1') {
-                ones++;
+            totalZeroCount += c == '0' ? 1 : 0;
+        }
+
+        int min = Integer.MAX_VALUE;
+        int ones = 0;
+        int zeroes = 0;
+
+        for (char c : s.toCharArray()) {
+            int currZero = c == '0' ? 1 : 0;
+            int ops = ones + totalZeroCount - currZero - zeroes;
+            min = Math.min(min, ops);
+
+            if (currZero == 1) {
+                zeroes++;
             } else {
-                flips = Math.min(flips + 1, ones);
+                ones++;
             }
         }
-        return flips;
+
+        return min;
     }
 
 

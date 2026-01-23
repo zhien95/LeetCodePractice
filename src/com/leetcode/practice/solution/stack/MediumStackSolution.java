@@ -1,6 +1,5 @@
 package com.leetcode.practice.solution.stack;
 
-import java.util.ArrayDeque;
 import java.util.Stack;
 
 public class MediumStackSolution {
@@ -114,5 +113,25 @@ public class MediumStackSolution {
         }
 
         return stack.pop();
+    }
+
+    //https://leetcode.com/problems/daily-temperatures/
+    public int[] dailyTemperatures(int[] temperatures) {
+        Stack<Integer> stack = new Stack<>();
+        int[] res = new int[temperatures.length];
+
+        //[73,74,75,71,69,72,76,73]
+
+        for (int i = 0; i < temperatures.length; i++) {
+            int temp = temperatures[i];
+            while (!stack.isEmpty() && temperatures[stack.peek()] < temp) {
+                int prevIdx = stack.pop();
+                res[prevIdx] = i - prevIdx;
+            }
+            stack.push(i);
+        }
+
+        return res;
+
     }
 }

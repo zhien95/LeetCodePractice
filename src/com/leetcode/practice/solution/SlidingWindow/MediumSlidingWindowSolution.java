@@ -1,9 +1,7 @@
 package com.leetcode.practice.solution.SlidingWindow;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class MediumSlidingWindowSolution {
     /**
@@ -14,7 +12,7 @@ public class MediumSlidingWindowSolution {
      *
      * @param target The target sum to achieve
      * @param nums   Array of positive integers
-     * @return The minimal length of a subarray with sum >= target, or 0 if no such subarray exists
+     * @return The minimal length of a subarray withsum >= target, or 0 if no such subarray exists
      */
 //https://leetcode.com/problems/minimum-size-subarray-sum/description/?envType=study-plan-v2&envId=top-interview-150
     public int minSubArrayLen(int target, int[] nums) {
@@ -38,7 +36,7 @@ public class MediumSlidingWindowSolution {
      * [Longest Substring Without Repeating Characters]
      * <p>
      * Finds the length of the longest substring without repeating characters.
-     * Uses the sliding window technique with a hash map to track character positions.
+     *Uses the sliding window technique with a hash map to track character positions.
      *
      * @param s Input string
      * @return Length of the longest substring without repeating characters
@@ -52,7 +50,7 @@ public class MediumSlidingWindowSolution {
         for (int end = 0; end < s.length();end ++){
             char ch = s.charAt(end);
 
-            //if char seen, move start to last seen index +1
+            //if char seen, move startto last seen index +1
             if (lastSeen.containsKey(ch) && lastSeen.get(ch) >= start){
                 start = lastSeen.get(ch) +1;
             }
@@ -66,6 +64,19 @@ public class MediumSlidingWindowSolution {
 
     /**
      * [Longest Repeating Character Replacement]
+     ** maxCount represents the frequency of the most frequent character in the current window [left, right].
+     * It tracks the highest character frequency seen so far in any window during the algorithm execution.
+     *
+     * The algorithm uses a sliding window approach where:
+     * - We expand the window by moving theright pointer
+     * - We update the frequency of the current character and adjust maxCount accordingly
+     * - If the number of characters that need to be replaced ((right-left+1) - maxCount) exceeds k,
+     *   we shrink the window from the left until the condition is satisfied
+     * -We track the maximum window size achieved
+     *
+     * Note: maxCount doesn't necessarily reflect the exact max frequency in the current window at all times
+     * since we never decrease it when shrinking the window. But this is OK because we only care about finding
+     * the maximum possible window size, anda larger window would only be possible if maxCount increases.
      */
 //https://leetcode.com/problems/longest-repeating-character-replacement/description/
     public int characterReplacement(String s, int k) {
