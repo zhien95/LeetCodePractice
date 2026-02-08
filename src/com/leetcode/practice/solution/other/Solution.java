@@ -1,3 +1,5 @@
+package com.leetcode.practice.solution.other;
+
 import java.util.HashMap;
 import java.util.Map;
 

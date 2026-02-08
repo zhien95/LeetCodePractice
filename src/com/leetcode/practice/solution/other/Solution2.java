@@ -1,3 +1,5 @@
+package com.leetcode.practice.solution.other;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

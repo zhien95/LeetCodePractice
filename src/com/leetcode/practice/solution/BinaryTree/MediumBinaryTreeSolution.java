@@ -274,6 +274,31 @@ public class MediumBinaryTreeSolution {
         return root;
     }
 
+    //https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/?envType=problem-list-v2&envId=plakya4j&
+    class GoodNodeSolution {
+        int res = 0;
+
+        public int goodNodes(TreeNode root) {
+            dfs(root, root.val);
+            return res;
+        }
+
+        private void dfs(TreeNode node, int currentMax) {
+            if (node == null) return;
+
+            if (node.val >= currentMax) {
+                res++;
+            }
+
+            currentMax = Math.max(currentMax, node.val);
+
+            dfs(node.left, currentMax);
+            dfs(node.right, currentMax);
+        }
+    }
+
+
+
 
     public static void main(String[] args) {
         TreeNode root = createTree();
